@@ -1,0 +1,155 @@
+﻿@{
+    ViewBag.Title = "AdminLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/login.css" rel="stylesheet" />
+
+<div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+
+    <div class="row w-100 shadow-lg rounded-4 overflow-hidden main-box">
+
+        <!-- LEFT PANEL -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center lp">
+
+            <div class="text-white text-center px-4">
+                <h4 class="mb-3 fw-bold">NextGen</h4>
+                <h1 class="display-4 fw-bold">
+                    Admin Login
+                </h1>
+
+                <p class="mt-3 opacity-75" style="color:white;">
+                    Start your journey now with us
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center bg-light">
+
+            <div class="card p-4 border-0 shadow rounded-4 login-card">
+
+                <h3 class="mb-4 text-center fw-semibold">
+                    Login to your account
+                </h3>
+
+                <!-- LOGIN FORM -->
+                <form method="post"
+                      action="@Url.Action("AdminLogin","Admin")">
+
+                    <h3 class="mb-3 text-center">
+                        🛠️ Admin
+                    </h3>
+
+                    <!-- USERNAME -->
+                    <input type="text"
+                           name="UserName"
+                           placeholder="Enter Username"
+                           class="form-control mb-3"
+                           autocomplete="off"
+                           required>
+
+                    <!-- PASSWORD -->
+                    <div class="position-relative mb-2">
+
+                        <input type="password"
+                               id="pass"
+                               name="Password"
+                               placeholder="Enter Password"
+                               class="form-control"
+                               autocomplete="off"
+                               required>
+
+                        <span class="eye"
+                              onclick="togglePassword()">
+                            👁
+                        </span>
+
+                    </div>
+
+                    <!-- FORGOT -->
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <small class="text-danger">
+                            @ViewBag.msg
+                        </small>
+
+                        <a href="#"
+                           class="forgot"
+                           data-bs-toggle="modal"
+                           data-bs-target="#forgotModal">
+                            Forgot?
+                        </a>
+
+                    </div>
+
+                    <!-- LOGIN BUTTON -->
+                    <button type="submit"
+                            class="btn btn-primary w-100 mb-2">
+                        Login Now
+                    </button>
+
+                    <p class="text-center small">
+                        Admin account is created by system only.
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="modal fade" id="forgotModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content p-4 rounded-4">
+
+            <h5 class="mb-3 text-center">
+                Reset Admin Password
+            </h5>
+
+            @if (TempData["msg"] != null)
+            {
+                <div class="alert alert-info text-center">
+                    @TempData["msg"]
+                </div>
+            }
+
+            <form method="post" action="@Url.Action("ResetAdminPassword","Admin")">
+
+                <input type="text"
+                       name="UserName"
+                       class="form-control mb-3"
+                       placeholder="Enter Username"
+                       autocomplete="off"
+                       required>
+
+                <input type="password"
+                       name="NewPassword"
+                       class="form-control mb-3"
+                       placeholder="Enter New Password"
+                       autocomplete="off"
+                       required>
+                <input type="password"
+                       name="ConfirmPassword"
+                       class="form-control mb-3"
+                       placeholder="Confirm New Password"
+                       autocomplete="off"
+                       required>
+
+                <button type="submit" class="btn btn-dark w-100">
+                    Reset Password
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/Content/js/login.js"></script>

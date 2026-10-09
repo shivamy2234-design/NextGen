@@ -1,0 +1,1000 @@
+﻿@model List<NextGen.Models.PurchasedCourse>
+
+@{
+    ViewBag.Title = "Student Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var studentName = Session["StudentName"] != null ? Session["StudentName"].ToString() : "Student";
+    var studentEmail = Session["StudentEmail"] != null ? Session["StudentEmail"].ToString() : "student@example.com";
+    var avatarLetter = studentName.Substring(0, 1).ToUpper();
+}
+
+<style>
+    .student-dashboard {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a, #1e3a8a, #14532d);
+        padding: 30px;
+        color: #0f172a;
+        transition: 0.3s;
+    }
+
+    .dashboard-wrapper {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 25px;
+        max-width: 1400px;
+        margin: auto;
+        transition: 0.3s;
+    }
+
+    .sidebar,
+    .welcome-card,
+    .stat-card,
+    .section-card {
+        background: rgba(255,255,255,0.95);
+        box-shadow: 0 20px 45px rgba(0,0,0,0.22);
+    }
+
+    .sidebar {
+        border-radius: 22px;
+        padding: 25px;
+        height: fit-content;
+        position: sticky;
+        top: 110px;
+    }
+
+    .student-profile {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .student-avatar {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #22c55e);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        font-weight: bold;
+        margin: auto;
+    }
+
+    .student-profile h3 {
+        margin: 12px 0 4px;
+        font-size: 18px;
+    }
+
+    .student-profile p {
+        font-size: 13px;
+        color: #64748b;
+        word-break: break-word;
+    }
+
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: #334155;
+        font-weight: 600;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: #2563eb;
+            color: white;
+            transform: translateX(5px);
+        }
+
+    .dashboard-main {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .welcome-card {
+        border-radius: 24px;
+        padding: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+        .welcome-card h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .welcome-card p {
+            color: #64748b;
+            margin: 0;
+        }
+
+    .dashboard-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        flex-wrap: wrap;
+    }
+
+    .dash-icon-btn {
+        width: 46px;
+        height: 46px;
+        border: none;
+        border-radius: 14px;
+        background: white;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        cursor: pointer;
+        position: relative;
+        transition: 0.3s;
+        font-size: 16px;
+        color: #0f172a;
+    }
+
+        .dash-icon-btn:hover {
+            transform: translateY(-3px);
+        }
+
+    .notification-wrapper {
+        position: relative;
+    }
+
+    .notify-dot {
+        width: 10px;
+        height: 10px;
+        background: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+
+    .notification-dropdown {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 280px;
+        background: white;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+        display: none;
+        z-index: 100;
+    }
+
+        .notification-dropdown.show {
+            display: block;
+        }
+
+    .notify-item {
+        padding: 12px;
+        background: #f8fafc;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .continue-btn {
+        background: linear-gradient(135deg, #facc15, #f59e0b);
+        color: #0f172a;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-weight: bold;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: 0.3s;
+    }
+
+        .continue-btn:hover {
+            transform: translateY(-3px);
+            color: #0f172a;
+            box-shadow: 0 10px 25px rgba(250,204,21,0.4);
+        }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .stat-card {
+        border-radius: 20px;
+        padding: 22px;
+        transition: 0.3s;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card i {
+            font-size: 26px;
+            color: #2563eb;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h2 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .stat-card p {
+            color: #64748b;
+            margin: 4px 0 0;
+            font-size: 14px;
+        }
+
+    .section-card {
+        border-radius: 24px;
+        padding: 25px;
+    }
+
+    .dashboard-section {
+        display: none;
+    }
+
+        .dashboard-section.active-section {
+            display: block;
+        }
+
+    .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        gap: 15px;
+    }
+
+        .section-title h2 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .course-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 18px;
+        background: #f8fafc;
+        transition: 0.3s;
+        height: 100%;
+    }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 12px;
+        }
+
+        .course-card h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+
+        .course-card p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+    .progress-box {
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 20px;
+        overflow: hidden;
+        margin: 12px 0;
+    }
+
+    .progress-line {
+        height: 100%;
+        background: linear-gradient(135deg, #2563eb, #22c55e);
+        border-radius: 20px;
+    }
+
+    .course-btn,
+    .join-btn {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+        .course-btn:hover {
+            color: white;
+            background: #1d4ed8;
+        }
+
+    .join-btn {
+        background: #22c55e;
+    }
+
+        .join-btn:hover {
+            color: white;
+            background: #16a34a;
+        }
+
+    .bottom-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr;
+        gap: 20px;
+    }
+
+    .class-item,
+    .assignment-item,
+    .certificate-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px;
+        border-radius: 14px;
+        background: #f8fafc;
+        margin-bottom: 12px;
+        gap: 15px;
+    }
+
+        .class-item h4,
+        .assignment-item h4,
+        .certificate-item h4 {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .class-item p,
+        .assignment-item p,
+        .certificate-item p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+    .profile-detail p {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 10px 0;
+        margin: 0;
+        font-size: 14px;
+        gap: 15px;
+    }
+
+    .profile-detail span {
+        color: #64748b;
+        text-align: right;
+    }
+
+    .empty-box {
+        background: #f8fafc;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .dashboard-wrapper.sidebar-collapsed {
+        grid-template-columns: 90px 1fr;
+    }
+
+        .dashboard-wrapper.sidebar-collapsed .student-profile h3,
+        .dashboard-wrapper.sidebar-collapsed .student-profile p,
+        .dashboard-wrapper.sidebar-collapsed .sidebar-menu a span {
+            display: none;
+        }
+
+        .dashboard-wrapper.sidebar-collapsed .sidebar {
+            padding: 20px 10px;
+        }
+
+        .dashboard-wrapper.sidebar-collapsed .student-avatar {
+            width: 55px;
+            height: 55px;
+            font-size: 24px;
+        }
+
+        .dashboard-wrapper.sidebar-collapsed .sidebar-menu a {
+            justify-content: center;
+            padding: 13px;
+        }
+
+    .student-dashboard.dark-mode {
+        background: linear-gradient(135deg, #020617, #111827, #172554);
+    }
+
+        .student-dashboard.dark-mode .sidebar,
+        .student-dashboard.dark-mode .welcome-card,
+        .student-dashboard.dark-mode .stat-card,
+        .student-dashboard.dark-mode .section-card {
+            background: rgba(15,23,42,0.95);
+            color: white;
+        }
+
+        .student-dashboard.dark-mode h1,
+        .student-dashboard.dark-mode h2,
+        .student-dashboard.dark-mode h3,
+        .student-dashboard.dark-mode h4 {
+            color: white;
+        }
+
+        .student-dashboard.dark-mode p,
+        .student-dashboard.dark-mode span,
+        .student-dashboard.dark-mode small {
+            color: #cbd5e1 !important;
+        }
+
+        .student-dashboard.dark-mode .course-card,
+        .student-dashboard.dark-mode .class-item,
+        .student-dashboard.dark-mode .assignment-item,
+        .student-dashboard.dark-mode .certificate-item,
+        .student-dashboard.dark-mode .notification-dropdown,
+        .student-dashboard.dark-mode .notify-item,
+        .student-dashboard.dark-mode .empty-box {
+            background: #1e293b;
+            color: white;
+            border-color: #334155;
+        }
+
+        .student-dashboard.dark-mode .dash-icon-btn {
+            background: #1e293b;
+            color: white;
+        }
+
+        .student-dashboard.dark-mode .sidebar-menu a {
+            color: #cbd5e1;
+        }
+
+            .student-dashboard.dark-mode .sidebar-menu a:hover,
+            .student-dashboard.dark-mode .sidebar-menu a.active {
+                background: #2563eb;
+                color: white;
+            }
+
+        .student-dashboard.dark-mode .profile-detail p {
+            border-color: #334155;
+        }
+
+    @@media(max-width: 992px) {
+        .dashboard-wrapper,
+        .dashboard-wrapper.sidebar-collapsed {
+            grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+            position: static;
+        }
+
+        .dashboard-wrapper.sidebar-collapsed .student-profile h3,
+        .dashboard-wrapper.sidebar-collapsed .student-profile p,
+        .dashboard-wrapper.sidebar-collapsed .sidebar-menu a span {
+            display: inline;
+        }
+
+        .dashboard-wrapper.sidebar-collapsed .sidebar-menu a {
+            justify-content: flex-start;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .course-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .bottom-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .welcome-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    @@media(max-width: 576px) {
+        .student-dashboard {
+            padding: 18px;
+        }
+
+        .stats-grid,
+        .course-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .welcome-card h1 {
+            font-size: 24px;
+        }
+
+        .dashboard-actions {
+            width: 100%;
+        }
+
+        .continue-btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .notification-dropdown {
+            right: -80px;
+            width: 260px;
+        }
+
+        .class-item,
+        .assignment-item,
+        .certificate-item,
+        .profile-detail p {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .profile-detail span {
+            text-align: left;
+        }
+    }
+</style>
+
+<div class="student-dashboard">
+    <div class="dashboard-wrapper">
+
+        <aside class="sidebar">
+            <div class="student-profile">
+                <div class="student-avatar">
+                    @avatarLetter
+                </div>
+
+                <h3>@studentName</h3>
+                <p>@studentEmail</p>
+            </div>
+
+            <div class="sidebar-menu">
+                <a class="menu-link active" data-section="dashboardHome">
+                    <i class="fa fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a class="menu-link" data-section="myCourses">
+                    <i class="fa fa-book"></i>
+                    <span>My Courses</span>
+                </a>
+
+                <a class="menu-link" data-section="liveClasses">
+                    <i class="fa fa-video"></i>
+                    <span>Live Classes</span>
+                </a>
+
+                <a class="menu-link" data-section="assignments">
+                    <i class="fa fa-file-alt"></i>
+                    <span>Assignments</span>
+                </a>
+
+                <a class="menu-link" data-section="certificates">
+                    <i class="fa fa-certificate"></i>
+                    <span>Certificates</span>
+                </a>
+
+                <a class="menu-link" data-section="profileSection">
+                    <i class="fa fa-user"></i>
+                    <span>Profile</span>
+                </a>
+
+                <a href="@Url.Action("Logout", "User")">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+
+            <section class="welcome-card">
+                <div>
+                    <h1>Welcome Back, @studentName 👋</h1>
+                    <p>Continue your learning journey with NextGen Learning Hub.</p>
+                </div>
+
+                <div class="dashboard-actions">
+                    <div class="notification-wrapper">
+                        <button id="notificationBtn" class="dash-icon-btn" type="button">
+                            <i class="fa fa-bell"></i>
+                            <span class="notify-dot"></span>
+                        </button>
+
+                        <div id="notificationDropdown" class="notification-dropdown">
+                            <h4>Notifications</h4>
+                            <div class="notify-item">Your purchased courses are ready.</div>
+                            <div class="notify-item">New assignment will be available soon.</div>
+                            <div class="notify-item">Certificate section is under progress 🎉</div>
+                        </div>
+                    </div>
+
+                    <button id="themeToggle" class="dash-icon-btn" type="button">
+                        <i class="fa fa-moon"></i>
+                    </button>
+
+                    <button id="sidebarToggle" class="dash-icon-btn" type="button">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <a href="#" class="continue-btn" id="continueLearningBtn">
+                        Continue Learning
+                    </a>
+                </div>
+            </section>
+
+            <!-- DASHBOARD HOME -->
+            <div id="dashboardHome" class="dashboard-section active-section">
+
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fa fa-book-open"></i>
+                        <h2>@(Model != null ? Model.Count : 0)</h2>
+                        <p>Enrolled Courses</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <i class="fa fa-check-circle"></i>
+                        <h2>0</h2>
+                        <p>Completed Lessons</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <i class="fa fa-video"></i>
+                        <h2>@(Model != null ? Model.Count : 0)</h2>
+                        <p>Available Live Classes</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <i class="fa fa-certificate"></i>
+                        <h2>0</h2>
+                        <p>Certificates Earned</p>
+                    </div>
+                </section>
+
+                <br />
+
+                <section class="bottom-grid">
+                    <div class="section-card">
+                        <div class="section-title">
+                            <h2>Continue Learning</h2>
+                            <a href="#" class="menu-shortcut" data-section="myCourses">View Courses</a>
+                        </div>
+
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            var firstCourse = Model.First();
+
+                            <div class="course-card">
+                                <img src="@Url.Content(firstCourse.CourseImage)" alt="@firstCourse.CourseName" />
+
+                                <h3>@firstCourse.CourseName</h3>
+
+                                <p>Duration: @firstCourse.Duration</p>
+                                <p>Time: @firstCourse.StartTime - @firstCourse.EndTime</p>
+
+                                <div class="progress-box">
+                                    <div class="progress-line" style="width:10%"></div>
+                                </div>
+
+                                <small>10% Completed</small><br />
+
+                                <a href="#" class="course-btn">Continue Learning</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-box">
+                                <h3>No purchased course yet</h3>
+                                <p>Explore batches and start your learning journey.</p>
+                                <a href="@Url.Action("Batches", "User")" class="course-btn">Explore Courses</a>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="section-card">
+                        <div class="section-title">
+                            <h2>Profile</h2>
+                            <a href="#" class="menu-shortcut" data-section="profileSection">View</a>
+                        </div>
+
+                        <div class="profile-detail">
+                            <p><strong>Name</strong> <span>@studentName</span></p>
+                            <p><strong>Email</strong> <span>@studentEmail</span></p>
+                            <p><strong>Status</strong> <span>Active Student</span></p>
+                            <p><strong>Plan</strong> <span>@(Model != null && Model.Count > 0 ? "Paid Learning" : "Free Learning")</span></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- MY COURSES -->
+            <div id="myCourses" class="dashboard-section">
+                <section class="section-card">
+                    <div class="section-title">
+                        <h2>My Purchased Courses</h2>
+                        <a href="@Url.Action("Batches", "User")">Explore More</a>
+                    </div>
+
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        <div class="course-grid">
+                            @foreach (var item in Model)
+                            {
+                                <div class="course-card">
+                                    <img src="@Url.Content(item.CourseImage)" alt="@item.CourseName" />
+
+                                    <h3>@item.CourseName</h3>
+
+                                    <p>Duration: @item.Duration</p>
+                                    <p>Time: @item.StartTime - @item.EndTime</p>
+                                    <p>Status: <strong>@item.Status</strong></p>
+
+                                    <div class="progress-box">
+                                        <div class="progress-line" style="width:10%"></div>
+                                    </div>
+
+                                    <small>10% Completed</small><br />
+
+                                    <a href="#" class="course-btn">Continue Learning</a>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-box">
+                            <h3>No purchased course yet</h3>
+                            <p>Explore batches and start your learning journey.</p>
+
+                            <a href="@Url.Action("Batches", "User")" class="course-btn">
+                                Explore Courses
+                            </a>
+                        </div>
+                    }
+                </section>
+            </div>
+
+            <!-- LIVE CLASSES -->
+            <div id="liveClasses" class="dashboard-section">
+                <section class="section-card">
+                    <div class="section-title">
+                        <h2>Live Classes</h2>
+                        <span>Upcoming sessions</span>
+                    </div>
+
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="class-item">
+                                <div>
+                                    <h4>@item.CourseName Live Class</h4>
+                                    <p>Timing: @item.StartTime - @item.EndTime</p>
+                                </div>
+
+                                <a href="#" class="join-btn">Join</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-box">
+                            <h3>No live classes available</h3>
+                            <p>Purchase a course to see live classes here.</p>
+                        </div>
+                    }
+                </section>
+            </div>
+
+            <!-- ASSIGNMENTS -->
+            <div id="assignments" class="dashboard-section">
+                <section class="section-card">
+                    <div class="section-title">
+                        <h2>Assignments</h2>
+                        <span>Practice work</span>
+                    </div>
+
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="assignment-item">
+                                <div>
+                                    <h4>@item.CourseName Assignment 1</h4>
+                                    <p>Status: Not Submitted • Deadline: Coming Soon</p>
+                                </div>
+
+                                <a href="#" class="course-btn">View</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-box">
+                            <h3>No assignments yet</h3>
+                            <p>Assignments will appear after course purchase.</p>
+                        </div>
+                    }
+                </section>
+            </div>
+
+            <!-- CERTIFICATES -->
+            <div id="certificates" class="dashboard-section">
+                <section class="section-card">
+                    <div class="section-title">
+                        <h2>Certificates</h2>
+                        <span>Your achievements</span>
+                    </div>
+
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="certificate-item">
+                                <div>
+                                    <h4>@item.CourseName Certificate</h4>
+                                    <p>Complete the course to unlock certificate.</p>
+                                </div>
+
+                                <a href="#" class="course-btn">Locked</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-box">
+                            <h3>No certificates yet</h3>
+                            <p>Complete courses to earn certificates.</p>
+                        </div>
+                    }
+                </section>
+            </div>
+
+            <!-- PROFILE -->
+            <div id="profileSection" class="dashboard-section">
+                <section class="section-card">
+                    <div class="section-title">
+                        <h2>My Profile</h2>
+                        <span>Student details</span>
+                    </div>
+
+                    <div class="profile-detail">
+                        <p><strong>Name</strong> <span>@studentName</span></p>
+                        <p><strong>Email</strong> <span>@studentEmail</span></p>
+                        <p><strong>Status</strong> <span>Active Student</span></p>
+                        <p><strong>Total Courses</strong> <span>@(Model != null ? Model.Count : 0)</span></p>
+                        <p><strong>Plan</strong> <span>@(Model != null && Model.Count > 0 ? "Paid Learning" : "Free Learning")</span></p>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    const dashboard = document.querySelector(".student-dashboard");
+    const dashboardWrapper = document.querySelector(".dashboard-wrapper");
+
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = themeToggle.querySelector("i");
+
+    const notificationBtn = document.getElementById("notificationBtn");
+    const notificationDropdown = document.getElementById("notificationDropdown");
+
+    const sidebarToggle = document.getElementById("sidebarToggle");
+
+    const menuLinks = document.querySelectorAll(".menu-link");
+    const dashboardSections = document.querySelectorAll(".dashboard-section");
+    const menuShortcuts = document.querySelectorAll(".menu-shortcut");
+    const continueLearningBtn = document.getElementById("continueLearningBtn");
+
+    function openSection(sectionId) {
+        dashboardSections.forEach(section => {
+            section.classList.remove("active-section");
+        });
+
+        document.getElementById(sectionId).classList.add("active-section");
+
+        menuLinks.forEach(link => {
+            link.classList.remove("active");
+
+            if (link.getAttribute("data-section") === sectionId) {
+                link.classList.add("active");
+            }
+        });
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    menuLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-section");
+            openSection(sectionId);
+        });
+    });
+
+    menuShortcuts.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute("data-section");
+            openSection(sectionId);
+        });
+    });
+
+    continueLearningBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openSection("myCourses");
+    });
+
+    if (localStorage.getItem("nextgen-theme") === "dark") {
+        dashboard.classList.add("dark-mode");
+        themeIcon.classList.remove("fa-moon");
+        themeIcon.classList.add("fa-sun");
+    }
+
+    themeToggle.addEventListener("click", function () {
+        dashboard.classList.toggle("dark-mode");
+
+        if (dashboard.classList.contains("dark-mode")) {
+            localStorage.setItem("nextgen-theme", "dark");
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+        } else {
+            localStorage.setItem("nextgen-theme", "light");
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+        }
+    });
+
+    notificationBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle("show");
+    });
+
+    notificationDropdown.addEventListener("click", function (e) {
+        e.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+        notificationDropdown.classList.remove("show");
+    });
+
+    sidebarToggle.addEventListener("click", function () {
+        if (window.innerWidth > 992) {
+            dashboardWrapper.classList.toggle("sidebar-collapsed");
+        }
+    });
+
+    window.addEventListener("resize", function () {
+        if (window.innerWidth <= 992) {
+            dashboardWrapper.classList.remove("sidebar-collapsed");
+        }
+    });
+</script>

@@ -1,0 +1,187 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\NextGen\\NextGen\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\views\\user\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\views\\user\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\views\\user\\batches.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\views\\user\\batches.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|d:\\nextgen\\nextgen\\nextgen\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\views\\user\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\views\\user\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|D:\\NextGen\\NextGen\\nextgen\\views\\user\\services.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{67D1DCE9-9D54-4D5F-85A6-9C7F1397CB82}|NextGen\\NextGen.csproj|solutionrelative:nextgen\\views\\user\\services.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Batches.cshtml",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Batches.cshtml",
+              "RelativeDocumentMoniker": "NextGen\\Views\\User\\Batches.cshtml",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Batches.cshtml",
+              "RelativeToolTip": "NextGen\\Views\\User\\Batches.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-28T08:55:09.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Contact.cshtml",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Contact.cshtml",
+              "RelativeDocumentMoniker": "NextGen\\Views\\User\\Contact.cshtml",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Contact.cshtml",
+              "RelativeToolTip": "NextGen\\Views\\User\\Contact.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-28T08:41:49.167Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Services.cshtml",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Services.cshtml",
+              "RelativeDocumentMoniker": "NextGen\\Views\\User\\Services.cshtml",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Services.cshtml",
+              "RelativeToolTip": "NextGen\\Views\\User\\Services.cshtml",
+              "ViewState": "AgIAAIAAAAAAAAAAAADwv4QAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-28T08:37:41.575Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "About.cshtml",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\About.cshtml",
+              "RelativeDocumentMoniker": "NextGen\\Views\\User\\About.cshtml",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\About.cshtml",
+              "RelativeToolTip": "NextGen\\Views\\User\\About.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-28T03:14:00.634Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Index.cshtml",
+              "RelativeDocumentMoniker": "NextGen\\Views\\User\\Index.cshtml",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Views\\User\\Index.cshtml",
+              "RelativeToolTip": "NextGen\\Views\\User\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPkAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-28T02:56:38.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "NextGen\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "NextGen\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAJ4BAAAAAAAAAAAAALIBAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-28T03:06:07.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "NextGen\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\UserController.cs",
+              "RelativeToolTip": "NextGen\\Controllers\\UserController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwCAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T03:23:57.479Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "NextGen\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "NextGen\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T03:22:31.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TeacherController.cs",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\TeacherController.cs",
+              "RelativeDocumentMoniker": "NextGen\\Controllers\\TeacherController.cs",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\TeacherController.cs",
+              "RelativeToolTip": "NextGen\\Controllers\\TeacherController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T03:22:10.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "NextGen\\Controllers\\StudentController.cs",
+              "ToolTip": "D:\\NextGen\\NextGen\\NextGen\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "NextGen\\Controllers\\StudentController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T03:21:51.855Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

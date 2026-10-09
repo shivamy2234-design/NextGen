@@ -1,0 +1,491 @@
+﻿@{
+    ViewBag.Title = "Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+    .services-page {
+        background: linear-gradient(135deg, #f8fbff, #eef3ff, #ffffff);
+        min-height: 100vh;
+        padding-bottom: 50px;
+    }
+
+    .services-hero {
+        padding: 70px 15px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .services-badge {
+        display: inline-block;
+        background: #e8e9ff;
+        color: #2945ff;
+        padding: 7px 22px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+    .services-hero h1 {
+        font-size: 52px;
+        font-weight: 800;
+        color: #08122d;
+        margin-bottom: 15px;
+    }
+
+    .services-hero p {
+        max-width: 650px;
+        margin: auto;
+        color: #5f667a;
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .service-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 22px;
+        padding: 32px;
+        height: 100%;
+        box-shadow: 0 12px 35px rgba(12, 45, 72, 0.08);
+        transition: all 0.3s ease;
+    }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 45px rgba(12, 45, 72, 0.15);
+        }
+
+    .service-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 25px;
+    }
+
+    .service-icon {
+        width: 78px;
+        height: 78px;
+        min-width: 78px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+    }
+
+    .icon-blue {
+        background: #e9efff;
+        color: #3157ff;
+    }
+
+    .icon-red {
+        background: #ffeaf0;
+        color: #ef3158;
+    }
+
+    .icon-green {
+        background: #e8f8ee;
+        color: #24a05a;
+    }
+
+    .icon-purple {
+        background: #f0eaff;
+        color: #6f3cff;
+    }
+
+    .icon-orange {
+        background: #fff2e4;
+        color: #f08b22;
+    }
+
+    .icon-cyan {
+        background: #e8f8fb;
+        color: #1296ad;
+    }
+
+    .service-card h5 {
+        color: #0a1028;
+        font-weight: 750;
+        margin-bottom: 12px;
+    }
+
+    .service-card p {
+        color: #5f667a;
+        font-size: 15px;
+        line-height: 1.7;
+        margin-bottom: 16px;
+    }
+
+    .service-link {
+        color: #2548ff;
+        font-weight: 650;
+        text-decoration: none;
+        font-size: 15px;
+    }
+
+        .service-link i {
+            vertical-align: middle;
+            transition: 0.3s;
+        }
+
+        .service-link:hover i {
+            transform: translateX(5px);
+        }
+
+    .stats-box {
+        background: linear-gradient(135deg, #2444e8, #4930e8);
+        border-radius: 22px;
+        padding: 28px;
+        color: #ffffff;
+        box-shadow: 0 16px 35px rgba(36, 68, 232, 0.25);
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        justify-content: center;
+        border-right: 1px solid rgba(255,255,255,0.25);
+    }
+
+        .stat-item.last {
+            border-right: none;
+        }
+
+    .stat-icon {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #2945ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        min-width: 65px;
+    }
+
+    .stat-item h3 {
+        font-size: 28px;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    .stat-item p {
+        margin: 0;
+        opacity: 0.9;
+        font-size: 14px;
+    }
+
+    .cta-box {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 45px;
+        box-shadow: 0 12px 35px rgba(12, 45, 72, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .cta-left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .cta-illustration {
+        width: 180px;
+        height: 140px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #edf2ff, #f8fbff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 75px;
+        color: #3157ff;
+    }
+
+    .cta-box h4 {
+        font-weight: 800;
+        color: #08122d;
+        font-size: 28px;
+    }
+
+    .cta-box p {
+        color: #5f667a;
+        margin-bottom: 0;
+    }
+
+    .btn-nextgen {
+        background: linear-gradient(135deg, #3157ff, #243be8);
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        padding: 13px 28px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 8px 20px rgba(49, 87, 255, 0.3);
+    }
+
+        .btn-nextgen:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+    @@media (max-width: 991px) {
+        .services-hero h1 {
+            font-size: 42px;
+        }
+
+        .stat-item {
+            border-right: none;
+            margin-bottom: 25px;
+        }
+
+            .stat-item.last {
+                margin-bottom: 0;
+            }
+
+        .cta-box,
+        .cta-left {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .services-hero h1 {
+            font-size: 34px;
+        }
+
+        .service-content {
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+
+        .service-card {
+            padding: 26px 22px;
+        }
+
+        .cta-box {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
+<div class="services-page">
+
+    <!-- HERO SECTION -->
+    <section class="services-hero">
+        <span class="services-badge">WHAT WE OFFER</span>
+        <h1>Our Services</h1>
+        <p>
+            Explore the wide range of services designed to improve your learning experience
+            and help you build a better future with NextGen Learning Hub.
+        </p>
+    </section>
+
+    <!-- SERVICES CARDS -->
+    <section class="container pb-5">
+        <div class="row g-4">
+
+            <!-- Service 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon icon-blue">
+                            <i class="ri-book-open-line"></i>
+                        </div>
+                        <div>
+                            <h5>Online Courses</h5>
+                            <p>Access high-quality and structured courses created for modern learners.</p>
+                            <a href="@Url.Action("Batches", "User")" class="service-link">
+                                Explore Courses <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon icon-red">
+                            <i class="ri-live-line"></i>
+                        </div>
+                        <div>
+                            <h5>Live Classes</h5>
+                            <p>Join real-time interactive classes and learn directly from expert teachers.</p>
+                            <a href="@Url.Action("StudentLogin", "User")" class="service-link">
+                                Join Live Classes <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon icon-green">
+                            <i class="ri-line-chart-line"></i>
+                        </div>
+                        <div>
+                            <h5>Skill Development</h5>
+                            <p>Build technical and soft skills with practical projects and exercises.</p>
+                            <a href="@Url.Action("Batches", "User")" class="service-link">
+                                Start Learning <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon icon-purple">
+                            <i class="ri-bar-chart-box-line"></i>
+                        </div>
+                        <div>
+                            <h5>Progress Tracking</h5>
+                            <p>Track your course progress, performance reports and learning journey.</p>
+                            <a href="@Url.Action("StudentLogin", "User")" class="service-link">
+                                View Progress <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon icon-orange">
+                            <i class="ri-team-line"></i>
+                        </div>
+                        <div>
+                            <h5>Mentorship</h5>
+                            <p>Get proper guidance and mentorship from experienced professionals.</p>
+                            <a href="@Url.Action("Batches", "User")" class="service-link">
+                                Find a Mentor <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon icon-cyan">
+                            <i class="ri-file-list-3-line"></i>
+                        </div>
+                        <div>
+                            <h5>Study Materials</h5>
+                            <p>Access notes, PDFs, assignments and learning resources anytime.</p>
+                            <a href="@Url.Action("StudentLogin", "User")" class="service-link">
+                                Access Materials <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="container my-4">
+        <div class="stats-box">
+            <div class="row align-items-center text-center">
+
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="ri-user-3-line"></i>
+                        </div>
+                        <div class="text-start">
+                            <h3>500+</h3>
+                            <p>Students</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="ri-graduation-cap-line"></i>
+                        </div>
+                        <div class="text-start">
+                            <h3>25+</h3>
+                            <p>Teachers</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6 mt-4 mt-md-0">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="ri-book-2-line"></i>
+                        </div>
+                        <div class="text-start">
+                            <h3>40+</h3>
+                            <p>Courses</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6 mt-4 mt-md-0">
+                    <div class="stat-item last">
+                        <div class="stat-icon">
+                            <i class="ri-medal-line"></i>
+                        </div>
+                        <div class="text-start">
+                            <h3>95%</h3>
+                            <p>Success Rate</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="container my-5">
+        <div class="cta-box">
+            <div class="cta-left">
+                <div class="cta-illustration">
+                    <i class="ri-computer-line"></i>
+                </div>
+
+                <div>
+                    <h4>Ready to Start Your Learning Journey?</h4>
+                    <p>
+                        Join NextGen Learning Hub today and take the first step towards
+                        a better future.
+                    </p>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Batches", "User")" class="btn-nextgen">
+                Get Started Now <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+    </section>
+
+</div>

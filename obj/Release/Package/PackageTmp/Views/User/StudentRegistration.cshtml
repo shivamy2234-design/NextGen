@@ -1,0 +1,230 @@
+﻿@model NextGen.Models.Student
+@{
+    ViewBag.Title = "StudentRegistration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .student-register-page {
+        --dark: #0f172a;
+        --blue: #2563eb;
+        --yellow: #facc15;
+        --text: #334155;
+        --light: #f8fafc;
+        --error: #dc2626;
+        min-height: calc(100vh - 90px);
+        background: linear-gradient(135deg, #0f172a, #172856, #215d40, #ffffff);
+        background-size: 300% 300%;
+        animation: studentGradientMove 8s ease infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 15px;
+    }
+
+    @@keyframes studentGradientMove {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .student-register-page .student-form-container {
+        width: 100%;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.96);
+        padding: 25px 24px;
+        border-radius: 20px;
+        box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+    }
+
+    .student-register-page .student-form-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+        .student-register-page .student-form-logo img {
+            height: 45px;
+        }
+
+        .student-register-page .student-form-logo h2 {
+            font-size: 23px;
+            color: var(--dark);
+            margin: 0;
+        }
+
+    .student-register-page .student-input-group {
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .student-register-page label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .student-register-page input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 14px;
+        background: var(--light);
+        outline: none;
+    }
+
+        .student-register-page input:focus {
+            border-color: var(--blue);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
+
+    .student-register-page .student-submit-btn {
+        width: 100%;
+        padding: 11px;
+        background: linear-gradient(135deg, var(--yellow), #f59e0b);
+        color: var(--dark);
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: 0.3s;
+    }
+
+        .student-register-page .student-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(250,204,21,0.35);
+        }
+
+    .student-register-page .signin-link {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 13px;
+    }
+
+        .student-register-page .signin-link a {
+            color: var(--blue);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+            .student-register-page .signin-link a:hover {
+                text-decoration: underline;
+            }
+
+    .student-register-page .error-message {
+        color: var(--error);
+        font-size: 12px;
+        margin-top: 4px;
+        display: none;
+    }
+
+    @@media(max-width:480px) {
+        .student-register-page .student-form-container {
+            padding: 20px;
+        }
+    }
+    .student-message {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+        .student-message.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .student-message.error {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+</style>
+
+<div class="student-register-page">
+    <div class="student-form-container">
+
+        <a href="@Url.Action("Index", "User")" class="student-form-logo">
+            <img src="@Url.Content("~/Content/images/nextgen.jpeg")" alt="NextGen Logo">
+            <h2>Join as Student</h2>
+        </a>
+
+        <form id="studentForm" method="post">
+            <div class="student-input-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="StudentName" placeholder="Enter your name" required>
+            </div>
+
+            <div class="student-input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="StudentEmail" placeholder="example@mail.com" required>
+            </div>
+
+            <div class="student-input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="StudentPassword" placeholder="Create a password" required>
+            </div>
+
+            <div class="student-input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="StudentCPassword" placeholder="Confirm your password" required>
+                <div id="errorMsg" class="error-message">Passwords do not match!</div>
+            </div>
+
+            <button type="submit" class="student-submit-btn">Register as Student</button>
+
+            @if (ViewBag.msg != null)
+            {
+                <div class="student-message @ViewBag.msgClass">
+                    @ViewBag.msg
+                </div>
+            }
+
+            <div class="signin-link">
+                Already have an account?
+                <a href="~/User/StudentLogin">Sign in</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('studentForm');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const errorMsg = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', function (e) {
+        if (password.value !== confirmPassword.value) {
+            e.preventDefault();
+            errorMsg.style.display = 'block';
+            confirmPassword.style.borderColor = '#dc2626';
+        }
+    });
+
+    confirmPassword.addEventListener('input', function () {
+        errorMsg.style.display = 'none';
+        confirmPassword.style.borderColor = '#cbd5e1';
+    });
+</script>

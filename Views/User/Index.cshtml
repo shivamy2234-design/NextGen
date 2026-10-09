@@ -1,0 +1,430 @@
+﻿@model List<NextGen.Models.Feedback>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .feedback-form-box {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 25px;
+        margin-top: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+        .feedback-form-box h2 {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #0c2d48;
+        }
+
+        .feedback-form-box p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .feedback-form-box .form-control {
+            border-radius: 10px;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+        }
+
+        .feedback-form-box textarea {
+            min-height: 110px;
+            resize: none;
+        }
+
+    .feedback-submit-btn {
+        background: linear-gradient(135deg, #3157ff, #243be8);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 25px;
+        font-weight: 600;
+    }
+
+        .feedback-submit-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .feedback-success-msg {
+        background: #e8fff0;
+        color: #11823b;
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        font-weight: 600;
+    }
+
+    .student-name {
+        font-weight: 700;
+        color: #0c2d48;
+        margin-top: 8px;
+        display: block;
+    }
+</style>
+
+<!-- home page -->
+<div class="container-fluid">
+    <div class="row" id="hbody">
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-4 mt-5 mb-0 text-light">
+            <h1 class="mt-5 mb-0">Shape Your Future with NextGen Learning Hub</h1>
+            <p class="mt-2">Upgrade your skills with expert-led live sessions & courses.</p>
+
+            <a href="@Url.Action("Batches", "User")">
+                <input type="submit" value="Explore Batches" class="btn btn-warning">
+            </a>
+
+            <a href="@Url.Action("StudentRegistration", "User")">
+                <input type="submit" value="Join Now" class="btn btn-warning ms-2">
+            </a>
+        </div>
+
+        <div class="col-sm-6">
+            <img src="~/Content/images/hbody.png" alt="NextGen Learning Hub" class="img-fluid">
+        </div>
+    </div>
+</div>
+
+<!-- DAILY QUOTE SECTION -->
+<section class="quote-strip">
+    <div class="quote-box main-container">
+        <p id="dailyQuote">“Loading quote...”</p>
+        <span id="quoteAuthor">— Keep Learning!</span>
+    </div>
+</section>
+
+<!-- DEMO CLASS SECTION -->
+<section class="demo-class">
+    <div class="main-container demo-grid">
+        <div class="demo-video">
+            <div class="demo-video-frame">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Demo Class">
+                <div class="play-btn">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-content">
+            <h2>Watch a Demo Class</h2>
+            <p>Experience our teaching style in action and see how NextGen makes learning easy, interactive, and effective for every student.</p>
+            <a href="#" class="demo-btn">Watch Demo Class</a>
+        </div>
+    </div>
+</section>
+
+<!-- TOP TEACHERS SECTION -->
+<section class="teachers">
+    <div class="main-container">
+        <h2 class="section-title">Meet Our Top Teachers</h2>
+        <p class="section-subtitle">Learn from experienced professionals</p>
+
+        <div class="teacher-slider-wrap">
+            <button class="slider-btn" id="prevBtn">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="teacher-slider">
+                <div class="teacher-track" id="teacherTrack">
+
+                    <div class="teacher-card">
+                        <div class="teacher-img"><i class="fa-solid fa-user-tie"></i></div>
+                        <h3>Ayush Srivastav</h3>
+                        <p>(Full Stack Development & Cyber Security)</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+
+                    <div class="teacher-card">
+                        <div class="teacher-img"><i class="fa-solid fa-user-graduate"></i></div>
+                        <h3>Deepak Srivastav</h3>
+                        <p>Web Development</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                    </div>
+
+                    <div class="teacher-card">
+                        <div class="teacher-img"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <h3>Ankit Kumar</h3>
+                        <p>AI/ML</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                    </div>
+
+                    <div class="teacher-card">
+                        <div class="teacher-img"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <h3>Ishant Kumar</h3>
+                        <p>C C++ & DSA</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                    </div>
+
+                    <div class="teacher-card">
+                        <div class="teacher-img"><i class="fa-solid fa-laptop-code"></i></div>
+                        <h3>Janvi Yadav</h3>
+                        <p>Computer Fundamental</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="slider-btn" id="nextBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- STATS + TESTIMONIALS + FAQ -->
+<section class="stats-testimonials">
+    <div class="main-container">
+
+        <div class="stats-review-grid">
+
+            <!-- ACHIEVEMENTS -->
+            <div class="stats-box">
+                <h2>Our Achievements</h2>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <h3>500+</h3>
+                        <h4>Students</h4>
+                        <p>Empowered</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>20+</h3>
+                        <h4>Expert</h4>
+                        <p>Instructors</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>98%</h3>
+                        <h4>Success</h4>
+                        <p>Rate</p>
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STUDENTS FEEDBACK -->
+            <div class="testimonial-box">
+                <h2>Students Feedback</h2>
+                <a href="@Url.Action("AllFeedbacks", "User")" class="btn btn-primary btn-sm">
+                    View All
+                </a>
+
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="testimonial-card">
+                            <div class="testimonial-text">
+                                <div class="stars">
+                                    @for (int i = 1; i <= item.Rating; i++)
+                                    {
+                                        <i class="fa-solid fa-star"></i>
+                                    }
+
+                                    @for (int i = item.Rating + 1; i <= 5; i++)
+                                    {
+                                        <i class="fa-regular fa-star"></i>
+                                    }
+                                </div>
+
+                                <p>“@item.Message”</p>
+                                <span class="student-name">- @item.StudentName</span>
+                            </div>
+
+                            <div class="testimonial-avatar">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p>“The courses are very clear and easy to understand. The teachers explain every topic in a simple way.”</p>
+                            <span class="student-name">- NextGen Student</span>
+                        </div>
+
+                        <div class="testimonial-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p>“I really improved my confidence with regular practice and doubt support. This platform helped me a lot.”</p>
+                            <span class="student-name">- NextGen Learner</span>
+                        </div>
+
+                        <div class="testimonial-avatar">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- FEEDBACK FORM -->
+        <div class="feedback-form-box">
+            <h2>Share Your Feedback</h2>
+            <p>Your feedback helps us improve NextGen Learning Hub.</p>
+
+            @if (TempData["FeedbackMsg"] != null)
+            {
+                <div class="feedback-success-msg">
+                    @TempData["FeedbackMsg"]
+                </div>
+            }
+
+            <form method="post" action="@Url.Action("SubmitFeedback", "User")">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <input type="text"
+                               name="StudentName"
+                               placeholder="Your Name"
+                               required
+                               class="form-control mb-3" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="email"
+                               name="StudentEmail"
+                               placeholder="Your Email"
+                               class="form-control mb-3" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <select name="Rating" required class="form-control mb-3">
+                            <option value="">Select Rating</option>
+                            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ Very Good</option>
+                            <option value="3">⭐⭐⭐ Good</option>
+                            <option value="2">⭐⭐ Average</option>
+                            <option value="1">⭐ Poor</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <textarea name="Message"
+                                  placeholder="Write your feedback..."
+                                  required
+                                  class="form-control mb-3"></textarea>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="submit" class="feedback-submit-btn">
+                            Submit Feedback
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <div class="faq-testimonial-wrap">
+            <div class="faq-box">
+                <h2>FAQs</h2>
+                <p class="desc">Frequently Asked Questions</p>
+
+                <div class="faq-item active">
+                    <button class="faq-question">
+                        Are the classes live or recorded?
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        We provide both live and recorded classes so students can learn in real-time and revise anytime later.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do you provide doubt clearing support?
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Yes, we provide regular doubt support sessions where students can ask questions and get clear explanations.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Are the courses suitable for beginners?
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Yes, our courses are designed for both beginners and advanced learners with step-by-step teaching methods.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What are the fees for the courses?
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Course fees depend on the subject, duration, and batch type. You can check the batches section or contact us for details.
+                    </div>
+                </div>
+            </div>
+
+            <div></div>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,257 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <style>
+        /* ========== GLOBAL ========== */
+/*        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI',sans-serif;
+        }*/
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f4f7fb;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+
+        /* ========== CONTACT SECTION ========== */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        /* Left panel */
+        .contact-info {
+            background: #0c2d48;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+            .contact-info h2 {
+                margin-bottom: 10px;
+            }
+
+            .contact-info p {
+                margin-bottom: 10px;
+            }
+
+        .info p {
+            margin: 15px 0;
+        }
+
+        .socials {
+            margin-top: 20px;
+        }
+
+            .socials i {
+                margin-right: 10px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+                .socials i:hover {
+                    color: #28a745;
+                    transform: scale(1.1);
+                }
+
+        /* Map */
+        .map iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 420px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* Form */
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+            .contact-form h2 {
+                margin-bottom: 20px;
+            }
+
+            .contact-form input,
+            .contact-form select,
+            .contact-form textarea {
+                width: 100%;
+                margin: 10px 0;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                outline: none;
+            }
+
+                .contact-form input:focus,
+                .contact-form select:focus,
+                .contact-form textarea:focus {
+                    border-color: #28a745;
+                }
+
+        .row-flex {
+            display: flex;
+            gap: 10px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .contact-btn {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .contact-btn:hover {
+                background: #218838;
+            }
+    </style>
+
+    <!-- CONTACT -->
+    <section class="contact-container">
+
+        <!-- Info -->
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <p>Feel free to reach out to us</p>
+
+            <div class="info">
+                <p><i class="fa fa-envelope"></i> support@nextgen.com</p>
+                <p><i class="fa fa-location-dot"></i> Azamgarh U.P India</p>
+            </div>
+
+            <div class="socials">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+            </div>
+        </div>
+
+        <!-- Map -->
+        <div class="map">
+            <iframe src="https://maps.google.com/maps?q=azamgarh&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+        </div>
+
+        <!-- Form -->
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+
+            <form id="contactForm">
+                <select required>
+                    <option value="">Select Subject</option>
+                    <option>Course Inquiry</option>
+                    <option>Support</option>
+                </select>
+
+                <div class="row-flex">
+                    <input type="text" placeholder="First Name" required>
+                    <input type="text" placeholder="Last Name" required>
+                </div>
+
+                <input type="email" placeholder="Email" required>
+
+                <select required>
+                    <option value="">I am a</option>
+                    <option>Student</option>
+                    <option>Teacher</option>
+                </select>
+
+                <textarea placeholder="Message" required></textarea>
+
+                <button type="submit" class="contact-btn">Send Message</button>
+            </form>
+        </div>
+
+    </section>
+
+    <script>
+const menuToggle = document.querySelector(".menu-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+if (menuToggle && navLinks) {
+    menuToggle.onclick = () => {
+        navLinks.classList.toggle("show");
+    };
+}
+
+document.querySelectorAll(".dropdown").forEach(item => {
+    const menu = item.querySelector(".dropdown-menu");
+    if (menu) {
+        item.addEventListener("click", (e) => {
+            if (window.innerWidth <= 768) {
+                e.stopPropagation();
+                menu.classList.toggle("showDropdown");
+            }
+        });
+    }
+});
+
+document.addEventListener("click", () => {
+    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+        menu.classList.remove("showDropdown");
+    });
+});
+
+document.getElementById("contactForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    alert("Message Sent Successfully!");
+    this.reset();
+});
+
+document.getElementById("enquiryForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const name = document.getElementById("enquiryName").value.trim();
+    const phone = document.getElementById("enquiryPhone").value.trim();
+    const message = document.getElementById("enquiryMessage").value.trim();
+
+    if(name === "" || phone === "" || message === ""){
+        alert("Please fill all fields.");
+        return;
+    }
+
+    alert("Enquiry Submitted Successfully!");
+    this.reset();
+
+    const enquiryModal = document.getElementById("enquiryModal");
+    const modalInstance = bootstrap.Modal.getInstance(enquiryModal);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+});
+    </script>
+
+
+

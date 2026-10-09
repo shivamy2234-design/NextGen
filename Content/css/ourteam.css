@@ -1,0 +1,245 @@
+﻿
+body {
+    background: #f5f8ff;
+}
+
+.team-hero {
+    min-height: 430px;
+    background: linear-gradient(135deg, #071952, #0b5ed7, #38bdf8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 70px 20px;
+    color: white;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.badge-text {
+    background: rgba(255,255,255,0.18);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin: 25px 0 15px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    opacity: 0.95;
+}
+
+.hero-buttons {
+    margin-top: 30px;
+}
+
+.btn-main,
+.btn-outline {
+    padding: 12px 26px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 8px;
+    display: inline-block;
+}
+
+.btn-main {
+    background: white;
+    color: #0b5ed7;
+}
+
+.btn-outline {
+    border: 2px solid white;
+    color: white;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+    .section-title h2 {
+        color: #071952;
+        font-weight: 800;
+    }
+
+    .section-title p {
+        color: #555;
+    }
+
+.project-section,
+.team-section,
+.contribution-section,
+.tech-section {
+    padding: 70px 8%;
+}
+
+.feature-grid,
+.team-grid,
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.feature-card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    font-weight: 600;
+    color: #071952;
+    text-align: center;
+    transition: 0.3s;
+}
+
+    .feature-card:hover {
+        transform: translateY(-6px);
+    }
+
+.stats-section {
+    background: #071952;
+    color: white;
+    padding: 45px 8%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 25px;
+    text-align: center;
+}
+
+.stat-box h3 {
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.stat-box p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.member-card {
+    background: white;
+    border-radius: 22px;
+    padding: 30px 22px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.09);
+    transition: 0.3s;
+}
+
+    .member-card:hover {
+        transform: translateY(-8px);
+    }
+
+.member-img {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #0b5ed7;
+}
+
+    .member-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.member-card h3 {
+    color: #071952;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.member-card span {
+    color: #0b5ed7;
+    font-weight: 700;
+}
+
+.member-card p {
+    color: #555;
+    margin-top: 15px;
+    font-size: 15px;
+}
+
+.skills {
+    margin-top: 15px;
+}
+
+    .skills small {
+        background: #eaf2ff;
+        color: #0b5ed7;
+        padding: 6px 10px;
+        border-radius: 20px;
+        display: inline-block;
+        margin: 4px;
+        font-weight: 600;
+    }
+
+.contribution-box {
+    background: white;
+    max-width: 850px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+}
+
+    .contribution-box div {
+        padding: 14px 0;
+        border-bottom: 1px solid #eee;
+        color: #333;
+    }
+
+        .contribution-box div:last-child {
+            border-bottom: none;
+        }
+
+.tech-grid div {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 16px;
+    color: #071952;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+    .team-hero {
+        min-height: 360px;
+        padding: 50px 15px;
+    }
+
+    .project-section,
+    .team-section,
+    .contribution-section,
+    .tech-section {
+        padding: 50px 5%;
+    }
+    .social-icons {
+        margin-top: 15px;
+    }
+
+        .social-icons a {
+            color: #0b5ed7;
+            font-size: 20px;
+            margin: 0 8px;
+            transition: 0.3s;
+        }
+
+            .social-icons a:hover {
+                transform: scale(1.2);
+            }
+}

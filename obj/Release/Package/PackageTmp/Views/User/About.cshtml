@@ -1,0 +1,494 @@
+﻿@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+    .about-page {
+        background: linear-gradient(135deg, #f8fbff, #eef3ff, #ffffff);
+        min-height: 100vh;
+        padding-bottom: 50px;
+    }
+
+    .about-hero {
+        padding: 80px 15px 55px;
+        text-align: center;
+    }
+
+    .about-badge {
+        display: inline-block;
+        background: #e8e9ff;
+        color: #2945ff;
+        padding: 7px 22px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+    .about-hero h1 {
+        font-size: 52px;
+        font-weight: 800;
+        color: #08122d;
+        margin-bottom: 15px;
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #3157ff, #6f3cff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .about-hero p {
+        max-width: 720px;
+        margin: auto;
+        color: #5f667a;
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .about-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 12px 35px rgba(12, 45, 72, 0.08);
+        height: 100%;
+    }
+
+        .about-card h2 {
+            font-weight: 800;
+            color: #08122d;
+        }
+
+        .about-card p,
+        .about-card li {
+            color: #5f667a;
+            line-height: 1.8;
+        }
+
+    .check-list {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 22px;
+    }
+
+        .check-list li {
+            margin-bottom: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .check-list i {
+            color: #3157ff;
+            font-size: 20px;
+            margin-top: 4px;
+        }
+
+    .mission-box {
+        background: linear-gradient(135deg, #3157ff, #4930e8);
+        color: #ffffff;
+        border-radius: 24px;
+        padding: 42px;
+        height: 100%;
+        box-shadow: 0 16px 35px rgba(49, 87, 255, 0.25);
+    }
+
+        .mission-box i {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: #ffffff;
+            color: #3157ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 22px;
+        }
+
+        .mission-box h3 {
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .mission-box p {
+            opacity: 0.92;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+    .stat-card {
+        background: #ffffff;
+        border-radius: 22px;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 12px 35px rgba(12, 45, 72, 0.08);
+        transition: 0.3s ease;
+        height: 100%;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-7px);
+        }
+
+    .stat-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: #e9efff;
+        color: #3157ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin: 0 auto 18px;
+    }
+
+    .stat-card h2 {
+        font-weight: 800;
+        color: #08122d;
+        margin-bottom: 5px;
+    }
+
+    .stat-card p {
+        color: #5f667a;
+        margin-bottom: 0;
+    }
+
+    .section-heading {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+        .section-heading h2 {
+            font-weight: 800;
+            color: #08122d;
+        }
+
+        .section-heading p {
+            color: #5f667a;
+        }
+
+    .mentor-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 12px 35px rgba(12, 45, 72, 0.08);
+        transition: 0.3s ease;
+        height: 100%;
+    }
+
+        .mentor-card:hover {
+            transform: translateY(-8px);
+        }
+
+    .mentor-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 18px;
+        border: 5px solid #e9efff;
+    }
+
+    .mentor-card h5 {
+        font-weight: 800;
+        color: #08122d;
+        margin-bottom: 5px;
+    }
+
+    .mentor-card p {
+        color: #3157ff;
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .mentor-social a {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #eef3ff;
+        color: #3157ff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 4px;
+        text-decoration: none;
+    }
+
+    .cta-box {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 45px;
+        box-shadow: 0 12px 35px rgba(12, 45, 72, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+        .cta-box h3 {
+            font-weight: 800;
+            color: #08122d;
+        }
+
+        .cta-box p {
+            color: #5f667a;
+            margin-bottom: 0;
+        }
+
+    .btn-nextgen {
+        background: linear-gradient(135deg, #3157ff, #243be8);
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        padding: 13px 28px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 8px 20px rgba(49, 87, 255, 0.3);
+    }
+
+        .btn-nextgen:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+    @@media(max-width: 991px) {
+        .about-hero h1 {
+            font-size: 40px;
+        }
+
+        .cta-box {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    @@media(max-width: 576px) {
+        .about-hero h1 {
+            font-size: 34px;
+        }
+
+        .about-card,
+        .mission-box,
+        .cta-box {
+            padding: 28px 22px;
+        }
+    }
+</style>
+
+<div class="about-page">
+
+    <!-- HERO -->
+    <section class="about-hero">
+        <span class="about-badge">ABOUT NEXTGEN</span>
+        <h1>Building the Future with <span class="gradient-text">NextGen Learning Hub</span></h1>
+        <p>
+            NextGen Learning Hub is an online learning platform designed to help students
+            learn practical skills through courses, live classes, mentorship and project-based learning.
+        </p>
+    </section>
+
+    <!-- ABOUT + MISSION -->
+    <section class="container py-5">
+        <div class="row g-4 align-items-stretch">
+
+            <div class="col-lg-7">
+                <div class="about-card">
+                    <h2>Our Commitment to <span class="gradient-text">Practical Learning</span></h2>
+                    <p>
+                        At NextGen, we focus on real learning, not only theory. Our goal is to help
+                        students build technical knowledge, confidence, and industry-ready skills.
+                    </p>
+
+                    <ul class="check-list">
+                        <li>
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <span>Project-based learning with real-world examples.</span>
+                        </li>
+                        <li>
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <span>Live classes and recorded sessions for flexible learning.</span>
+                        </li>
+                        <li>
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <span>Guidance from mentors to improve career direction.</span>
+                        </li>
+                        <li>
+                            <i class="ri-checkbox-circle-fill"></i>
+                            <span>Study materials, assignments and progress tracking.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="mission-box">
+                    <i class="ri-rocket-line"></i>
+                    <h3>The NextGen Mission</h3>
+                    <p>
+                        Our mission is to make quality technical education simple, practical and accessible
+                        for every student who wants to grow in the digital world.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="container py-4" id="stats-section">
+        <div class="row g-4">
+
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="ri-user-3-line"></i>
+                    </div>
+                    <h2 class="counter" data-target="500">0</h2>
+                    <p>Active Students</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="ri-book-open-line"></i>
+                    </div>
+                    <h2 class="counter" data-target="40">0</h2>
+                    <p>Total Courses</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="ri-medal-line"></i>
+                    </div>
+                    <h2 class="counter" data-target="95">0</h2>
+                    <p>Satisfaction %</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="ri-team-line"></i>
+                    </div>
+                    <h2 class="counter" data-target="25">0</h2>
+                    <p>Expert Mentors</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MENTORS -->
+    <section class="container py-5">
+        <div class="section-heading">
+            <h2>Meet Our Mentors</h2>
+            <p>Learn from experienced teachers and industry-focused mentors.</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="mentor-card">
+                    <img src="https://i.pravatar.cc/300?u=11" class="mentor-img" alt="Mentor">
+                    <h5>Rahul Sharma</h5>
+                    <p>Full Stack Developer</p>
+                    <div class="mentor-social">
+                        <a href="#"><i class="ri-linkedin-fill"></i></a>
+                        <a href="#"><i class="ri-user-line"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mentor-card">
+                    <img src="https://i.pravatar.cc/300?u=12" class="mentor-img" alt="Mentor">
+                    <h5>Priya Verma</h5>
+                    <p>UI/UX Mentor</p>
+                    <div class="mentor-social">
+                        <a href="#"><i class="ri-linkedin-fill"></i></a>
+                        <a href="#"><i class="ri-user-line"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mentor-card">
+                    <img src="https://i.pravatar.cc/300?u=13" class="mentor-img" alt="Mentor">
+                    <h5>Amit Singh</h5>
+                    <p>.NET Trainer</p>
+                    <div class="mentor-social">
+                        <a href="#"><i class="ri-linkedin-fill"></i></a>
+                        <a href="#"><i class="ri-user-line"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="container my-4">
+        <div class="cta-box">
+            <div>
+                <h3>Ready to Learn with NextGen?</h3>
+                <p>Explore our courses and start your practical learning journey today.</p>
+            </div>
+
+            <a href="@Url.Action("Batches", "User")" class="btn-nextgen">
+                Explore Courses <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    const startCounters = () => {
+        const counters = document.querySelectorAll('.counter');
+        const speed = 120;
+
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace(/,/g, '');
+                const inc = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc).toLocaleString();
+                    setTimeout(updateCount, 12);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+
+            updateCount();
+        });
+    };
+
+    const statsSection = document.querySelector('#stats-section');
+
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(statsSection);
+    }
+</script>

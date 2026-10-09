@@ -1,0 +1,108 @@
+﻿@model List<NextGen.Models.Feedback>
+
+@{
+    ViewBag.Title = "All Feedbacks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .feedback-page {
+        background: #f5f7fb;
+        min-height: 100vh;
+        padding: 50px 20px;
+    }
+
+    .feedback-title {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+        .feedback-title h1 {
+            font-weight: bold;
+            color: #0c2d48;
+        }
+
+    .feedback-card {
+        background: white;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        transition: .3s;
+        height: 100%;
+    }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .student-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0c2d48;
+    }
+
+    .stars {
+        color: #ffc107;
+        font-size: 18px;
+        margin: 8px 0;
+    }
+
+    .feedback-message {
+        color: #555;
+        margin-top: 10px;
+    }
+
+    .feedback-date {
+        margin-top: 15px;
+        font-size: 13px;
+        color: gray;
+    }
+</style>
+
+<div class="feedback-page">
+
+    <div class="container">
+
+        <div class="feedback-title">
+            <h1>Student Feedbacks</h1>
+            <p>What our students say about NextGen</p>
+        </div>
+
+        <div class="row g-4">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="feedback-card">
+
+                        <div class="student-name">
+                            @item.StudentName
+                        </div>
+
+                        <div class="stars">
+                            @for (int i = 1; i <= item.Rating; i++)
+                            {
+                                <span>⭐</span>
+                            }
+                        </div>
+
+                        <div class="feedback-message">
+                            @item.Message
+                        </div>
+
+                        <div class="feedback-date">
+                            @item.CreatedAt.ToString("dd MMM yyyy")
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+

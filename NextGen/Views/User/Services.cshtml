@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <style>
+        .section-title {
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .service-card {
+            border: none;
+            border-radius: 15px;
+            transition: 0.3s ease;
+        }
+
+            .service-card:hover {
+                transform: translateY(-4px);
+            }
+
+        .icon-box {
+            font-size: 40px;
+            color: #0d6efd;
+        }
+
+        .cta-section {
+            background: #ffffff;
+            border-radius: 20px;
+        }
+
+        .border-end {
+            border-color: #e5e7eb !important;
+        }
+    </style>
+
+    <!-- Header -->
+    <section class="container py-5 text-center">
+        <h1 class="display-5 fw-bold text-primary">NextGen Learning Hub</h1>
+        <p class="text-muted">Learn with NextGen through live classes, recorded sessions, and expert mentorship.</p>
+    </section>
+
+    <!-- Services Section -->
+    <section class="container py-4">
+        <h2 class="text-center section-title mb-5 text-muted">Our<span style="color: rgba(0, 0, 255, 0.756);"> Services</span></h2>
+
+        <div class="row g-4">
+
+            <!-- Service 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card p-4 text-center shadow-sm">
+                    <div class="icon-box mb-3"><i class="ri-book-open-line fs-1 text-primary"></i></div>
+                    <h5 class="fw-semibold">Online Courses</h5>
+                    <p class="text-muted small">Interactive and structured courses for modern learners.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card p-4 text-center shadow-sm">
+                    <div class="icon-box mb-3"><i class="ri-live-line  fs-1 text-primary"></i></div>
+                    <h5 class="fw-semibold">Live Classes</h5>
+                    <p class="text-muted small">Join real-time sessions with expert instructors.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Join Now</a>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card p-4 text-center shadow-sm">
+                    <div class="icon-box mb-3"><i class="ri-lightbulb-line  fs-1 text-primary"></i></div>
+                    <h5 class="fw-semibold">Skill Development</h5>
+                    <p class="text-muted small">Enhance technical and soft skills with practical learning.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Start Learning</a>
+                </div>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card p-4 text-center shadow-sm">
+                    <div class="icon-box mb-3"><i class="ri-bar-chart-line  fs-1 text-primary"></i></div>
+                    <h5 class="fw-semibold">Progress Tracking</h5>
+                    <p class="text-muted small">Track your learning journey with detailed analytics.</p>
+                    <a href="#" class="btn btn-primary btn-sm">View Stats</a>
+                </div>
+            </div>
+
+            <!-- Service 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card p-4 text-center shadow-sm">
+                    <div class="icon-box mb-3"><i class="ri-team-line  fs-1 text-primary"></i></div>
+                    <h5 class="fw-semibold">Mentorship</h5>
+                    <p class="text-muted small">Get guidance from industry experts and mentors.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Connect</a>
+                </div>
+            </div>
+
+            <!-- Service 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card p-4 text-center shadow-sm">
+                    <div class="icon-box mb-3"><i class="ri-file-list-3-line  fs-1 text-primary"></i></div>
+                    <h5 class="fw-semibold">Study Material</h5>
+                    <p class="text-muted small">Access curated notes, PDFs, and resources anytime.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Access</a>
+                </div>
+            </div>
+
+        </div>
+        </section>
+
+
+        <!-- Stats Section -->
+        <section class="container my-5">
+            <div class="bg-white shadow-sm rounded-4 p-4 text-center">
+
+                <div class="row text-center">
+
+                    <!-- Students -->
+                    <div class="col-md-4 mb-3 mb-md-0 border-end">
+                        <h3 class="fw-semibold mb-1">Students</h3>
+                        <h4 class="text-primary fw-bold">0</h4>
+                    </div>
+
+                    <!-- Teachers -->
+                    <div class="col-md-4 mb-3 mb-md-0 border-end">
+                        <h3 class="fw-semibold mb-1">Teachers</h3>
+                        <h4 class="text-primary fw-bold">0</h4>
+                    </div>
+
+                    <!-- Courses -->
+                    <div class="col-md-4">
+                        <h3 class="fw-semibold mb-1">Courses</h3>
+                        <h4 class="text-primary fw-bold">0</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="container my-5">
+            <div class="cta-section p-5 text-center shadow-sm">
+                <h4 class="fw-semibold mb-3">Ready to Start Your Learning Journey?</h4>
+                <p class="text-muted">Join thousands of students already learning with NextGen</p>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+        </section>
+
+

@@ -1,0 +1,210 @@
+﻿@model NextGen.Models.Course
+
+@{
+    ViewBag.Title = "Course Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background: #f5f7fa;
+        font-family: Arial, sans-serif;
+    }
+
+    .course-details-box {
+        background: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .course-img {
+        width: 100%;
+        height: 380px;
+        object-fit: cover;
+        border-radius: 18px;
+    }
+
+    .course-title {
+        font-size: 36px;
+        font-weight: 700;
+        color: #0c2d48;
+    }
+
+    .course-price {
+        font-size: 32px;
+        font-weight: bold;
+        color: #198754;
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 18px;
+        height: 100%;
+    }
+
+    .buy-btn {
+        padding: 12px 35px;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    @@media(max-width: 768px) {
+        .course-img {
+            height: 240px;
+        }
+
+        .course-title {
+            font-size: 28px;
+        }
+
+        .buy-btn {
+            width: 100%;
+            margin-left: 0 !important;
+        }
+    }
+</style>
+
+<div class="container my-5">
+    <div class="course-details-box">
+
+        <div class="row align-items-center g-4">
+
+            <div class="col-md-6">
+                <img src="@Url.Content(Model.CourseImage)"
+                     class="course-img"
+                     alt="@Model.CourseName" />
+            </div>
+
+            <div class="col-md-6">
+                <h1 class="course-title">@Model.CourseName</h1>
+
+                <p class="text-muted fs-5">
+                    Learn @Model.CourseName with practical classes, assignments and expert guidance.
+                </p>
+
+                <h2 class="course-price">₹@Model.CoursePrice</h2>
+
+                <p class="mt-3">
+                    This course is designed to help students build practical skills through live learning,
+                    study materials, assignments and project-based practice.
+                </p>
+
+                <button id="buyBtn" class="btn btn-success buy-btn mt-3">
+                    Buy Now
+                </button>
+
+                <a href="@Url.Action("Batches", "User")"
+                   class="btn btn-outline-secondary buy-btn mt-3 ms-2">
+                    Back
+                </a>
+            </div>
+
+        </div>
+
+        <div class="row g-3 mt-4">
+
+            <div class="col-md-3">
+                <div class="info-card">
+                    <strong>Duration</strong>
+                    <p>@Model.Duration</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="info-card">
+                    <strong>Start Time</strong>
+                    <p>@Model.StartTime</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="info-card">
+                    <strong>End Time</strong>
+                    <p>@Model.EndTime</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="info-card">
+                    <strong>Certificate</strong>
+                    <p>Included</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    var options = {
+        "key": "rzp_test_SbizyZ0hJzoLq6",
+
+        "amount": @(Convert.ToInt32(Model.CoursePrice) * 100),
+
+        "currency": "INR",
+
+        "name": "NextGen Learning Hub",
+
+        "description": "@Model.CourseName",
+
+        "handler": function (response) {
+
+            fetch('/User/SavePurchase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    courseId: @Model.Id,
+                    paymentId: response.razorpay_payment_id
+                })
+            })
+
+            .then(res => res.json())
+
+            .then(data => {
+
+                if (data.success) {
+
+                    alert("Payment Successful!");
+
+                    window.location.href =
+                        "/User/StudentDashboard";
+                }
+                else {
+
+                    alert(data.message);
+                }
+            })
+
+            .catch(error => {
+
+                console.log(error);
+
+                alert("Something went wrong.");
+            });
+        },
+
+        "theme": {
+            "color": "#0d6efd"
+        }
+    };
+
+    document
+        .getElementById("buyBtn")
+        .onclick = function (e) {
+
+        var rzp =
+        new Razorpay(options);
+
+        rzp.open();
+
+        e.preventDefault();
+    };
+</script>

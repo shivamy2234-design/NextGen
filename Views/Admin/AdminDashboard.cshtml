@@ -1,0 +1,1068 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var adminName = Session["AdminName"] != null ? Session["AdminName"].ToString() : "Admin";
+    var adminEmail = Session["AdminEmail"] != null ? Session["AdminEmail"].ToString() : "admin@nextgen.com";
+    var avatarLetter = adminName.Substring(0, 1).ToUpper();
+}
+
+<style>
+    html, body {
+        overflow-x: hidden;
+    }
+
+    .admin-dashboard {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a, #172554, #14532d);
+        padding: 30px;
+        transition: 0.3s ease;
+    }
+
+    .admin-wrapper {
+        max-width: 1450px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 24px;
+        align-items: start;
+        transition: all 0.35s ease;
+    }
+
+    .admin-sidebar,
+    .admin-top-card,
+    .admin-stat-card,
+    .admin-section {
+        background: rgba(255,255,255,0.96);
+        border-radius: 24px;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.22);
+        transition: all 0.3s ease;
+    }
+
+    .admin-sidebar {
+        padding: 24px;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    .admin-profile {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .admin-avatar {
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #9333ea);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .admin-profile h3 {
+        margin: 12px 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+    }
+
+    .admin-profile p {
+        margin: 0;
+        font-size: 13px;
+        color: #64748b;
+        word-break: break-word;
+    }
+
+    .admin-menu a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 15px;
+        border-radius: 14px;
+        text-decoration: none;
+        color: #334155;
+        font-weight: 600;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+        .admin-menu a:hover,
+        .admin-menu a.active {
+            background: #2563eb;
+            color: white;
+            transform: translateX(4px);
+        }
+
+    .admin-main {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        min-width: 0;
+    }
+
+    .admin-top-card {
+        padding: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        overflow: visible;
+    }
+
+        .admin-top-card h1 {
+            margin-bottom: 8px;
+            font-size: 30px;
+            color: #0f172a;
+        }
+
+        .admin-top-card p {
+            color: #64748b;
+            margin: 0;
+        }
+
+    .admin-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    .admin-icon-btn {
+        width: 46px;
+        height: 46px;
+        border: none;
+        border-radius: 14px;
+        background: white;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        transition: all 0.3s ease;
+        position: relative;
+        color: #0f172a;
+    }
+
+        .admin-icon-btn:hover {
+            transform: translateY(-3px);
+        }
+
+    .admin-action-btn {
+        padding: 12px 18px;
+        border-radius: 12px;
+        text-decoration: none;
+        background: linear-gradient(135deg, #facc15, #f59e0b);
+        color: #0f172a;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+        .admin-action-btn:hover {
+            transform: translateY(-3px);
+            color: #0f172a;
+        }
+
+    .admin-notification {
+        position: relative;
+    }
+
+    .admin-dot {
+        width: 10px;
+        height: 10px;
+        background: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+
+    .admin-dropdown {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 280px;
+        background: white;
+        border-radius: 18px;
+        padding: 18px;
+        display: none;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+        z-index: 999;
+    }
+
+        .admin-dropdown.show {
+            display: block;
+        }
+
+        .admin-dropdown h4 {
+            margin-bottom: 14px;
+            color: #0f172a;
+        }
+
+    .admin-notify-item {
+        padding: 12px;
+        border-radius: 12px;
+        background: #f8fafc;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #334155;
+    }
+
+    .admin-page-section {
+        display: none;
+    }
+
+        .admin-page-section.active-section {
+            display: block;
+        }
+
+    .admin-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .admin-stat-card {
+        padding: 22px;
+    }
+
+        .admin-stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .admin-stat-card i {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .admin-stat-card h2 {
+            margin: 0;
+            font-size: 30px;
+            color: #0f172a;
+        }
+
+        .admin-stat-card p {
+            margin-top: 5px;
+            color: #64748b;
+        }
+
+    .icon-students {
+        color: #2563eb;
+    }
+
+    .icon-teachers {
+        color: #16a34a;
+    }
+
+    .icon-courses {
+        color: #9333ea;
+    }
+
+    .icon-payments {
+        color: #ea580c;
+    }
+
+    .admin-section {
+        padding: 24px;
+    }
+
+    .admin-section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        gap: 15px;
+    }
+
+        .admin-section-title h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #0f172a;
+        }
+
+    .admin-bottom-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 0.8fr;
+        gap: 20px;
+    }
+
+    .admin-chart-box {
+        min-height: 290px;
+        border-radius: 18px;
+        background: #f8fafc;
+        border: 1px dashed #cbd5e1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748b;
+        font-size: 22px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .admin-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 520px;
+    }
+
+        .admin-table th {
+            background: #0f172a;
+            color: white;
+            padding: 13px;
+            font-size: 14px;
+        }
+
+        .admin-table td {
+            padding: 13px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .admin-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+    .admin-badge {
+        padding: 6px 10px;
+        border-radius: 30px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .badge-active {
+        background: #22c55e;
+    }
+
+    .badge-pending {
+        background: #f59e0b;
+    }
+
+    .admin-add-btn {
+        border: none;
+        background: #2563eb;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .admin-add-btn:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+    .empty-admin-box {
+        background: #f8fafc;
+        border-radius: 16px;
+        padding: 30px;
+        color: #64748b;
+        text-align: center;
+    }
+
+    .admin-wrapper.collapsed {
+        grid-template-columns: 90px 1fr;
+    }
+
+        .admin-wrapper.collapsed .admin-profile h3,
+        .admin-wrapper.collapsed .admin-profile p,
+        .admin-wrapper.collapsed .admin-menu a span {
+            display: none;
+        }
+
+        .admin-wrapper.collapsed .admin-menu a {
+            justify-content: center;
+            padding: 13px 0;
+        }
+
+        .admin-wrapper.collapsed .admin-sidebar {
+            padding: 20px 10px;
+        }
+
+        .admin-wrapper.collapsed .admin-avatar {
+            width: 54px;
+            height: 54px;
+            font-size: 24px;
+        }
+
+    .admin-dashboard.dark-mode {
+        background: linear-gradient(135deg, #020617, #111827, #172554);
+    }
+
+        .admin-dashboard.dark-mode .admin-sidebar,
+        .admin-dashboard.dark-mode .admin-top-card,
+        .admin-dashboard.dark-mode .admin-stat-card,
+        .admin-dashboard.dark-mode .admin-section {
+            background: rgba(15,23,42,0.96);
+            color: white;
+        }
+
+        .admin-dashboard.dark-mode h1,
+        .admin-dashboard.dark-mode h2,
+        .admin-dashboard.dark-mode h3,
+        .admin-dashboard.dark-mode h4 {
+            color: white;
+        }
+
+        .admin-dashboard.dark-mode p,
+        .admin-dashboard.dark-mode span,
+        .admin-dashboard.dark-mode small {
+            color: #cbd5e1 !important;
+        }
+
+        .admin-dashboard.dark-mode .admin-menu a {
+            color: #cbd5e1;
+        }
+
+            .admin-dashboard.dark-mode .admin-menu a.active,
+            .admin-dashboard.dark-mode .admin-menu a:hover {
+                background: #2563eb;
+                color: white;
+            }
+
+        .admin-dashboard.dark-mode .admin-icon-btn,
+        .admin-dashboard.dark-mode .admin-dropdown,
+        .admin-dashboard.dark-mode .admin-notify-item,
+        .admin-dashboard.dark-mode .admin-chart-box,
+        .admin-dashboard.dark-mode .empty-admin-box {
+            background: #1e293b;
+            color: white;
+            border-color: #334155;
+        }
+
+        .admin-dashboard.dark-mode .admin-table td {
+            color: #cbd5e1;
+            border-color: #334155;
+        }
+
+        .admin-dashboard.dark-mode .admin-table tbody tr:hover {
+            background: #1e293b;
+        }
+
+    @@media(max-width: 992px) {
+        .admin-wrapper,
+        .admin-wrapper.collapsed {
+            grid-template-columns: 1fr;
+        }
+
+        .admin-sidebar {
+            position: relative;
+            top: 0;
+            width: 100%;
+        }
+
+        .admin-wrapper.collapsed .admin-profile h3,
+        .admin-wrapper.collapsed .admin-profile p,
+        .admin-wrapper.collapsed .admin-menu a span {
+            display: inline;
+        }
+
+        .admin-wrapper.collapsed .admin-menu a {
+            justify-content: flex-start;
+            padding: 13px 15px;
+        }
+
+        .admin-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .admin-bottom-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .admin-top-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    @@media(max-width: 576px) {
+        .admin-dashboard {
+            padding: 18px;
+        }
+
+        .admin-top-card {
+            padding: 22px;
+        }
+
+            .admin-top-card h1 {
+                font-size: 24px;
+            }
+
+        .admin-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .admin-actions {
+            width: 100%;
+        }
+
+        .admin-icon-btn {
+            flex: 1;
+        }
+
+        .admin-action-btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .admin-dropdown {
+            right: auto;
+            left: 0;
+            width: 260px;
+        }
+
+        .admin-section-title {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .admin-add-btn {
+            width: 100%;
+            text-align: center;
+        }
+        .menu-title {
+            display: block;
+            margin: 18px 0 8px 12px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .admin-wrapper.collapsed .menu-title {
+            display: none;
+        }
+    }
+</style>
+
+<div class="admin-dashboard">
+
+    <div class="admin-wrapper">
+
+        <aside class="admin-sidebar">
+
+            <div class="admin-profile">
+                <div class="admin-avatar">@avatarLetter</div>
+                <h3>@adminName</h3>
+                <p>@adminEmail</p>
+            </div>
+
+            <div class="admin-menu">
+
+                <a class="admin-menu-link active" data-section="dashboardSection">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <small class="menu-title">Management</small>
+
+                <a class="admin-menu-link" data-section="studentsSection">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Students</span>
+                </a>
+
+                <a class="admin-menu-link" data-section="teachersSection">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span>Teachers</span>
+                </a>
+
+                <a href="@Url.Action("ManageCourses", "Admin")">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Courses</span>
+                </a>
+
+                <small class="menu-title">Business</small>
+
+                <a class="admin-menu-link" data-section="paymentsSection">
+                    <i class="fa-solid fa-money-check-dollar"></i>
+                    <span>Payments</span>
+                </a>
+
+                <a class="admin-menu-link" data-section="feedbackSection">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Feedback</span>
+                </a>
+
+                <a class="admin-menu-link" data-section="enquiriesSection">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Enquiries</span>
+                </a>
+
+                <small class="menu-title">System</small>
+
+                <a class="admin-menu-link" data-section="settingsSection">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+                <a href="@Url.Action("Logout", "Admin")">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+        <main class="admin-main">
+
+            <section class="admin-top-card">
+                <div>
+                    <h1>Welcome, @adminName 👋</h1>
+                    <p>Manage students, teachers, courses, payments and enquiries.</p>
+                </div>
+
+                <div class="admin-actions">
+
+                    <div class="admin-notification">
+                        <button type="button" id="adminNotifyBtn" class="admin-icon-btn">
+                            <i class="fa-solid fa-bell"></i>
+                            <span class="admin-dot"></span>
+                        </button>
+
+                        <div id="adminNotifyDropdown" class="admin-dropdown">
+                            <h4>Notifications</h4>
+                            <div class="admin-notify-item">New student registration received</div>
+                            <div class="admin-notify-item">New course purchase received</div>
+                            <div class="admin-notify-item">New feedback submitted</div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="adminThemeBtn" class="admin-icon-btn">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <button type="button" id="adminCollapseBtn" class="admin-icon-btn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <a href="@Url.Action("ManageCourses", "Admin")" class="admin-action-btn">
+                        Add New Course
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboardSection" class="admin-page-section active-section">
+
+                <section class="admin-stats">
+                    <div class="admin-stat-card">
+                        <i class="fa-solid fa-user-graduate icon-students"></i>
+                        <h2>@ViewBag.TotalStudents</h2>
+                        <p>Total Students</p>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <i class="fa-solid fa-chalkboard-user icon-teachers"></i>
+                        <h2>@ViewBag.TotalTeachers</h2>
+                        <p>Total Teachers</p>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <i class="fa-solid fa-book-open icon-courses"></i>
+                        <h2>@ViewBag.TotalCourses</h2>
+                        <p>Total Courses</p>
+                    </div>
+
+                    <div class="admin-stat-card">
+                        <i class="fa-solid fa-money-check-dollar icon-payments"></i>
+                        <h2>₹@ViewBag.TotalRevenue</h2>
+                        <p>Total Revenue</p>
+                    </div>
+                </section>
+
+                <br />
+
+                <section class="admin-bottom-grid">
+
+                    <div class="admin-section">
+                        <div class="admin-section-title">
+                            <h2>Analytics</h2>
+                        </div>
+
+                        <div class="admin-chart-box">
+                            Platform Overview / Analytics Section
+                        </div>
+                    </div>
+
+                    <div class="admin-section">
+                        <div class="admin-section-title">
+                            <h2>Quick Actions</h2>
+                        </div>
+
+                        <div class="empty-admin-box">
+                            <p>Use sidebar to manage students, teachers, courses, payments and feedback.</p>
+                            <a href="@Url.Action("ManageCourses", "Admin")" class="admin-add-btn">
+                                Manage Courses
+                            </a>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+
+            <!-- STUDENTS SECTION -->
+            <div id="studentsSection" class="admin-page-section">
+                <section class="admin-section">
+                    <div class="admin-section-title">
+                        <h2>Students Management</h2>
+                        <span>Total: @ViewBag.TotalStudents</span>
+                    </div>
+
+                    <div class="admin-table-wrapper">
+
+                        <table class="admin-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Student Name</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var student in ViewBag.StudentList)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @student.Id
+                                        </td>
+
+                                        <td>
+                                            @student.StudentName
+                                        </td>
+
+                                        <td>
+                                            @student.StudentEmail
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action("DeleteStudent","Admin",
+                        new { id = student.Id })"
+                                               class="admin-add-btn"
+                                               onclick="return confirm('Delete student?')">
+
+                                                Delete
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- TEACHERS SECTION -->
+            <div id="teachersSection" class="admin-page-section">
+                <section class="admin-section">
+                    <div class="admin-section-title">
+                        <h2>Teachers Management</h2>
+                        <span>Total: @ViewBag.TotalTeachers</span>
+                    </div>
+
+                    <div class="admin-table-wrapper">
+
+                        <table class="admin-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Experience</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var teacher in ViewBag.TeacherList)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @teacher.Id
+                                        </td>
+
+                                        <td>
+                                            @teacher.TeacherName
+                                        </td>
+
+                                        <td>
+                                            @teacher.TeacherEmail
+                                        </td>
+
+                                        <td>
+                                            @teacher.CourseName
+                                        </td>
+
+                                        <td>
+                                            @teacher.Experience
+                                        </td>
+
+                                        <td>
+
+                                            <a href="@Url.Action(
+                        "DeleteTeacher",
+                        "Admin",
+                        new { id = teacher.Id })"
+                                               class="admin-add-btn"
+                                               onclick="return confirm('Delete teacher?')">
+
+                                                Delete
+
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- PAYMENTS SECTION -->
+            <div id="paymentsSection" class="admin-page-section">
+                <section class="admin-section">
+                    <div class="admin-section-title">
+                        <h2>Payments / Purchases</h2>
+                        <span>Total Revenue: ₹@ViewBag.TotalRevenue</span>
+                    </div>
+
+                    <div class="admin-table-wrapper">
+
+                        <table class="admin-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Price</th>
+                                    <th>Payment Id</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in ViewBag.PurchaseList)
+                                {
+                                    <tr>
+                                        <td>@item.StudentName</td>
+                                        <td>@item.StudentEmail</td>
+                                        <td>@item.CourseName</td>
+                                        <td>₹@item.CoursePrice</td>
+                                        <td>@item.PaymentId</td>
+                                        <td>
+                                            <span class="admin-badge badge-active">
+                                                @item.Status
+                                            </span>
+                                        </td>
+                                        <td>@item.PurchaseDate.ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- FEEDBACK SECTION -->
+            <div id="feedbackSection" class="admin-page-section">
+                <section class="admin-section">
+                    <div class="admin-section-title">
+                        <a href="~/User/AllFeedbacks"><h2>Feedback Management</h2></a>
+                    </div>
+
+                    
+                </section>
+            </div>
+
+            <!-- ENQUIRIES SECTION -->
+            <div id="enquiriesSection" class="admin-page-section">
+                <section class="admin-section">
+                    <div class="admin-section-title">
+                        <h2>Enquiries & Contact Messages</h2>
+                    </div>
+
+                    <div class="empty-admin-box">
+                        Contact aur Enquiry messages yahan show karenge.
+                    </div>
+                </section>
+            </div>
+
+            <!-- SETTINGS SECTION -->
+            <div id="settingsSection" class="admin-page-section">
+                <section class="admin-section">
+                    <div class="admin-section-title">
+                        <h2>Settings</h2>
+                    </div>
+
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Setting</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Admin Name</td>
+                                    <td>@adminName</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Username</td>
+                                    <td>@Session["AdminUserName"]</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Status</td>
+                                    <td>
+                                        <span class="admin-badge badge-active">Active</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+<script>
+    const adminDashboard = document.querySelector(".admin-dashboard");
+    const adminWrapper = document.querySelector(".admin-wrapper");
+
+    const adminThemeBtn = document.getElementById("adminThemeBtn");
+    const adminCollapseBtn = document.getElementById("adminCollapseBtn");
+
+    const adminNotifyBtn = document.getElementById("adminNotifyBtn");
+    const adminNotifyDropdown = document.getElementById("adminNotifyDropdown");
+
+    const adminThemeIcon = adminThemeBtn.querySelector("i");
+
+    const adminMenuLinks = document.querySelectorAll(".admin-menu-link");
+    const adminSections = document.querySelectorAll(".admin-page-section");
+
+    function openAdminSection(sectionId) {
+        adminSections.forEach(section => {
+            section.classList.remove("active-section");
+        });
+
+        document.getElementById(sectionId).classList.add("active-section");
+
+        adminMenuLinks.forEach(link => {
+            link.classList.remove("active");
+
+            if (link.getAttribute("data-section") === sectionId) {
+                link.classList.add("active");
+            }
+        });
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    adminMenuLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-section");
+            openAdminSection(sectionId);
+        });
+    });
+
+    if (localStorage.getItem("admin-theme") === "dark") {
+        adminDashboard.classList.add("dark-mode");
+        adminThemeIcon.classList.remove("fa-moon");
+        adminThemeIcon.classList.add("fa-sun");
+    }
+
+    adminThemeBtn.addEventListener("click", function () {
+        adminDashboard.classList.toggle("dark-mode");
+
+        if (adminDashboard.classList.contains("dark-mode")) {
+            localStorage.setItem("admin-theme", "dark");
+            adminThemeIcon.classList.remove("fa-moon");
+            adminThemeIcon.classList.add("fa-sun");
+        }
+        else {
+            localStorage.setItem("admin-theme", "light");
+            adminThemeIcon.classList.remove("fa-sun");
+            adminThemeIcon.classList.add("fa-moon");
+        }
+    });
+
+    adminCollapseBtn.addEventListener("click", function () {
+        if (window.innerWidth > 992) {
+            adminWrapper.classList.toggle("collapsed");
+        }
+    });
+
+    adminNotifyBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        adminNotifyDropdown.classList.toggle("show");
+    });
+
+    adminNotifyDropdown.addEventListener("click", function (e) {
+        e.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+        adminNotifyDropdown.classList.remove("show");
+    });
+
+    window.addEventListener("resize", function () {
+        if (window.innerWidth <= 992) {
+            adminWrapper.classList.remove("collapsed");
+        }
+    });
+</script>

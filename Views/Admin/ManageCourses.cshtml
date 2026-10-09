@@ -1,0 +1,356 @@
+﻿@model List<NextGen.Models.Course>
+@{
+    ViewBag.Title = "Manage Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .manage-course-page {
+        min-height: 100vh;
+        background: linear-gradient(135deg,#0f172a,#172554,#14532d);
+        padding: 40px 20px;
+    }
+
+    .course-wrapper {
+        max-width: 1400px;
+        margin: auto;
+    }
+
+    .top-heading {
+        margin-bottom: 25px;
+        color: white;
+    }
+
+        .top-heading h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .top-heading p {
+            color: #cbd5e1;
+        }
+
+    .course-grid {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 25px;
+    }
+
+    .course-card,
+    .course-table-card {
+        background: rgba(255,255,255,0.96);
+        border-radius: 26px;
+        padding: 28px;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.22);
+    }
+
+        .course-card h2,
+        .course-table-card h2 {
+            margin-bottom: 20px;
+            color: #0f172a;
+            font-size: 28px;
+        }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+    .form-control {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid #cbd5e1;
+        padding: 12px 14px;
+        outline: none;
+        transition: 0.3s;
+        background: #f8fafc;
+    }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+            background: white;
+        }
+
+    .add-btn {
+        width: 100%;
+        border: none;
+        border-radius: 14px;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: bold;
+        background: linear-gradient(135deg,#2563eb,#1d4ed8);
+        color: white;
+        transition: 0.3s;
+    }
+
+        .add-btn:hover {
+            transform: translateY(-3px);
+        }
+
+    .msg-box {
+        margin-bottom: 18px;
+        background: #dcfce7;
+        color: #166534;
+        border-radius: 12px;
+        padding: 12px;
+        font-weight: 600;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        table thead {
+            background: #eff6ff;
+        }
+
+        table th,
+        table td {
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        table th {
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+    .course-img {
+        width: 90px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .delete-btn {
+        display: inline-block;
+        background: #ef4444;
+        color: white;
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .delete-btn:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+    .empty-row {
+        text-align: center;
+        padding: 30px;
+        color: #64748b;
+    }
+
+    @@media(max-width: 992px) {
+        .course-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media(max-width: 576px) {
+        .manage-course-page {
+            padding: 25px 12px;
+        }
+
+        .course-card,
+        .course-table-card {
+            padding: 20px;
+        }
+
+        .top-heading h1 {
+            font-size: 28px;
+        }
+    }
+</style>
+
+<div class="manage-course-page">
+
+    <div class="course-wrapper">
+
+        <div class="top-heading">
+            <h1>Manage Courses 🎓</h1>
+            <p>Add, view and manage learning platform courses.</p>
+        </div>
+
+        <div class="course-grid">
+
+            <!-- LEFT FORM -->
+
+            <div class="course-card">
+
+                <h2>Add Course</h2>
+
+                @if (TempData["CourseMsg"] != null)
+                {
+                    <div class="msg-box">
+                        @TempData["CourseMsg"]
+                    </div>
+                }
+
+                <form method="post"
+                      action="@Url.Action("AddCourse","Admin")"
+                      enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Course Name</label>
+                        <input type="text"
+                               name="CourseName"
+                               class="form-control"
+                               placeholder="Example: Full Stack Development"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Price</label>
+                        <input type="number"
+                               name="CoursePrice"
+                               class="form-control"
+                               placeholder="Enter course price"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Time</label>
+                        <input type="time"
+                               name="StartTime"
+                               class="form-control"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Time</label>
+                        <input type="time"
+                               name="EndTime"
+                               class="form-control"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text"
+                               name="Duration"
+                               class="form-control"
+                               placeholder="Example: 6 Months"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Image</label>
+                        <input type="file"
+                               name="CourseImage"
+                               class="form-control"
+                               required />
+                    </div>
+
+                    <button type="submit" class="add-btn">
+                        Add Course
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- RIGHT TABLE -->
+
+            <div class="course-table-card">
+
+                <h2>All Courses</h2>
+
+                <div class="table-responsive">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Course</th>
+                                <th>Price</th>
+                                <th>Duration</th>
+                                <th>Timing</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            <img src="@Url.Content(item.CourseImage)"
+                                                 class="course-img" />
+                                        </td>
+
+                                        <td>
+                                            @item.CourseName
+                                        </td>
+
+                                        <td>
+                                            ₹@item.CoursePrice
+                                        </td>
+
+                                        <td>
+                                            @item.Duration
+                                        </td>
+
+                                        <td>
+                                            @item.StartTime - @item.EndTime
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action("DeleteCourse","Admin",new { id=item.Id })"
+                                               class="delete-btn"
+                                               onclick="return confirm('Delete this course?')">
+
+                                                Delete
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="empty-row">
+                                        No course added yet.
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+

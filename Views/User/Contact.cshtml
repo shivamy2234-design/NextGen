@@ -1,0 +1,243 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #f4f7fb;
+        overflow-x: hidden;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+    }
+
+    .contact-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+        padding: 40px;
+    }
+
+    .contact-info {
+        background: #0c2d48;
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+    }
+
+    .info p {
+        margin: 15px 0;
+    }
+
+    .socials {
+        margin-top: 20px;
+    }
+
+        .socials i {
+            margin-right: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .socials i:hover {
+                color: #28a745;
+                transform: scale(1.1);
+            }
+
+    .map iframe {
+        width: 100%;
+        height: 100%;
+        min-height: 420px;
+        border-radius: 10px;
+        border: none;
+    }
+
+    .contact-form {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+        .contact-form h2 {
+            margin-bottom: 20px;
+        }
+
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+            .contact-form input:focus,
+            .contact-form select:focus,
+            .contact-form textarea:focus {
+                border-color: #28a745;
+            }
+
+    .row-flex {
+        display: flex;
+        gap: 10px;
+    }
+
+    textarea {
+        height: 100px;
+        resize: none;
+    }
+
+    .contact-btn {
+        width: 100%;
+        padding: 12px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .contact-btn:hover {
+            background: #218838;
+        }
+
+        .contact-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+</style>
+
+<section class="contact-container">
+
+    <div class="contact-info">
+        <h2>Contact Information</h2>
+        <p>Feel free to reach out to us</p>
+
+        <div class="info">
+            <p><i class="fa fa-envelope"></i> support@nextgen.com</p>
+            <p><i class="fa fa-location-dot"></i> Azamgarh U.P India</p>
+        </div>
+
+        <div class="socials">
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+        </div>
+    </div>
+
+    <div class="map">
+        <iframe src="https://maps.google.com/maps?q=azamgarh&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    </div>
+
+    <div class="contact-form">
+        <h2>Contact Us</h2>
+
+        @if (TempData["Success"] != null)
+        {
+            <div style="background:#d4edda;color:#155724;padding:12px;border-radius:8px;margin-bottom:15px;">
+                @TempData["Success"]
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div style="background:#f8d7da;color:#721c24;padding:12px;border-radius:8px;margin-bottom:15px;">
+                @TempData["Error"]
+            </div>
+        }
+
+        <form id="contactForm" method="post" action="@Url.Action("Contact", "User")">
+
+            <select name="subject" required>
+                <option value="">Select Subject</option>
+                <option value="Course Inquiry">Course Inquiry</option>
+                <option value="Support">Support</option>
+            </select>
+
+            <div class="row-flex">
+                <input type="text" name="FirstName" placeholder="First Name" required>
+                <input type="text" name="LastName" placeholder="Last Name" required>
+            </div>
+
+            <input type="email" name="Email" placeholder="Email" required>
+
+            <select name="Type" required>
+                <option value="">I am a</option>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+            </select>
+
+            <textarea name="Message" placeholder="Message" required></textarea>
+
+            <!-- EmailJS hidden fields -->
+            <input type="hidden" name="first_name">
+            <input type="hidden" name="last_name">
+            <input type="hidden" name="user_email">
+            <input type="hidden" name="user_type">
+            <input type="hidden" name="message">
+
+            <button type="submit" id="sendBtn" class="contact-btn">
+                Send Message
+            </button>
+
+        </form>
+    </div>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+    emailjs.init("c9ZBaV2XOijDDvZ5x");
+
+    const contactForm = document.getElementById("contactForm");
+    const sendBtn = document.getElementById("sendBtn");
+
+    contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        sendBtn.disabled = true;
+        sendBtn.innerText = "Sending...";
+
+        const params = {
+            first_name: document.querySelector("[name='FirstName']").value,
+            last_name: document.querySelector("[name='LastName']").value,
+            user_email: document.querySelector("[name='Email']").value,
+            user_type: document.querySelector("[name='Type']").value,
+            message: document.querySelector("[name='Message']").value
+        };
+
+        console.log("EmailJS Params:", params);
+
+        emailjs.send(
+            "service_glvsbqu",
+            "template_57wn6h8",
+            params
+        )
+            .then(function (response) {
+                console.log("EmailJS Success:", response);
+                contactForm.submit();
+            })
+            .catch(function (error) {
+                console.log("EmailJS Error:", error);
+                alert("Email failed. Check console.");
+                sendBtn.disabled = false;
+                sendBtn.innerText = "Send Message";
+            });
+    });
+</script>

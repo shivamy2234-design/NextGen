@@ -1,0 +1,275 @@
+body{
+    background: linear-gradient(135deg, #4e73df, #224abe);
+}
+
+/* MAIN BOX */
+.main-box{
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* LEFT PANEL */
+.lp{
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 500px;
+}
+
+/* CARD */
+.login-card{
+    width: 100%;
+    max-width: 350px;
+    backdrop-filter: blur(10px);
+}
+
+/* EYE ICON */
+.eye{
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    cursor: pointer;
+}
+
+/* LINKS */
+.link{
+    color:#0d6efd;
+    cursor:pointer;
+}
+
+.forgot{
+    cursor:pointer;
+    color:#0d6efd;
+}
+
+/* HOVER EFFECT */
+button:hover{
+    transform: scale(1.03);
+    transition: 0.3s;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .lp{
+        min-height: 200px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* BACKGROUND BLUR LAYER */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0,0,0,0.2), transparent 40%);
+    backdrop-filter: blur(25px);
+    z-index:-1;
+}
+
+/* MAIN CONTAINER GLASS EFFECT */
+.container-box{
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.form-container{
+    animation: fadeSlide 0.8s ease;
+}
+
+@keyframes fadeSlide{
+    from{
+        opacity:0;
+        transform: translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+
+button{
+    transition: all 0.3s ease;
+}
+
+button:hover{
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+input:focus, select:focus{
+    box-shadow:0 0 10px rgba(78,115,223,0.6);
+    border-color:#4e73df;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+body{
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    font-family: 'Segoe UI';
+}
+
+/* CARD */
+.card-box{
+    width:350px;
+    padding:30px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    color:white;
+}
+
+/* INPUT */
+.form-control{
+    border-radius:10px;
+}
+
+/* EYE */
+.eye{
+    position:absolute;
+    right:10px;
+    top:8px;
+    cursor:pointer;
+    color: #0f2027;
+}
+
+/* BUTTON */
+button{
+    border-radius:10px;
+    transition:0.3s;
+}
+
+button:hover{
+    transform: scale(1.03);
+}
+
+/* LINK */
+a{
+    color:#fff;
+    text-decoration:none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Extra */
+
+/* Full page gradient background */
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #4e73df, #1cc88a, #36b9cc);
+    background-size: 300% 300%;
+    animation: gradientMove 10s ease infinite;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Smooth animated gradient */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Center card */
+.card-box {
+    width: 380px;
+    padding: 30px;
+    border-radius: 20px;
+
+    /* Glass effect */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    color: #fff;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 12px;
+    border: none;
+    padding: 12px;
+}
+
+/* Button */
+.btn-primary {
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Eye icon */
+.eye {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+}
+
+/* Text color adjust */
+h3, p {
+    color:black;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+body::before {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    top: -100px;
+    left: -100px;
+    filter: blur(100px);
+}

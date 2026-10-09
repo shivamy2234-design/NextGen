@@ -1,0 +1,1058 @@
+﻿@{
+    ViewBag.Title = "Teacher Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var teacherName = Session["TeacherName"] != null ? Session["TeacherName"].ToString() : "Teacher";
+    var teacherEmail = Session["TeacherEmail"] != null ? Session["TeacherEmail"].ToString() : "teacher@example.com";
+    var courseName = Session["CourseName"] != null ? Session["CourseName"].ToString() : "Not Assigned";
+    var teacherId = Session["TeacherId"] != null ? Session["TeacherId"].ToString() : "0";
+    var avatarLetter = teacherName.Substring(0, 1).ToUpper();
+}
+
+<style>
+    html, body {
+        overflow-x: hidden;
+    }
+
+    .teacher-dashboard {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a, #172554, #14532d);
+        padding: 30px;
+        transition: 0.3s;
+    }
+
+    .teacher-wrapper {
+        max-width: 1450px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 24px;
+        align-items: start;
+        transition: 0.35s;
+    }
+
+    .teacher-sidebar,
+    .teacher-top-card,
+    .teacher-stat-card,
+    .teacher-section {
+        background: rgba(255,255,255,0.96);
+        border-radius: 24px;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.22);
+    }
+
+    .teacher-sidebar {
+        padding: 24px;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        overflow: hidden;
+    }
+
+    .teacher-profile {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .teacher-avatar {
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #22c55e);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .teacher-profile h3 {
+        margin: 12px 0 4px;
+        color: #0f172a;
+        font-size: 20px;
+    }
+
+    .teacher-profile p {
+        margin: 0;
+        font-size: 13px;
+        color: #64748b;
+        word-break: break-word;
+    }
+
+    .teacher-menu a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 15px;
+        border-radius: 14px;
+        text-decoration: none;
+        color: #334155;
+        font-weight: 600;
+        margin-bottom: 10px;
+        transition: 0.3s;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+        .teacher-menu a:hover,
+        .teacher-menu a.active {
+            background: #2563eb;
+            color: white;
+            transform: translateX(4px);
+        }
+
+    .teacher-main {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        min-width: 0;
+    }
+
+    .teacher-top-card {
+        padding: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+        .teacher-top-card h1 {
+            margin-bottom: 8px;
+            font-size: 30px;
+            color: #0f172a;
+        }
+
+        .teacher-top-card p {
+            color: #64748b;
+            margin: 0;
+        }
+
+    .teacher-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    .teacher-icon-btn {
+        width: 46px;
+        height: 46px;
+        border: none;
+        border-radius: 14px;
+        background: white;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        transition: 0.3s;
+        position: relative;
+        color: #0f172a;
+    }
+
+        .teacher-icon-btn:hover {
+            transform: translateY(-3px);
+        }
+
+    .teacher-action-btn {
+        padding: 12px 18px;
+        border-radius: 12px;
+        text-decoration: none;
+        background: linear-gradient(135deg, #facc15, #f59e0b);
+        color: #0f172a;
+        font-weight: bold;
+        transition: 0.3s;
+        display: inline-block;
+        border: none;
+    }
+
+        .teacher-action-btn:hover {
+            transform: translateY(-3px);
+            color: #0f172a;
+        }
+
+    .teacher-notification {
+        position: relative;
+    }
+
+    .teacher-dot {
+        width: 10px;
+        height: 10px;
+        background: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+
+    .teacher-dropdown {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 280px;
+        background: white;
+        border-radius: 18px;
+        padding: 18px;
+        display: none;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+        z-index: 999;
+    }
+
+        .teacher-dropdown.show {
+            display: block;
+        }
+
+    .teacher-notify-item {
+        padding: 12px;
+        border-radius: 12px;
+        background: #f8fafc;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #334155;
+    }
+
+    .teacher-section-page {
+        display: none;
+    }
+
+        .teacher-section-page.active-section {
+            display: block;
+        }
+
+    .teacher-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .teacher-stat-card {
+        padding: 22px;
+        transition: 0.3s;
+    }
+
+        .teacher-stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .teacher-stat-card i {
+            font-size: 28px;
+            color: #2563eb;
+            margin-bottom: 12px;
+        }
+
+        .teacher-stat-card h2 {
+            margin: 0;
+            font-size: 30px;
+            color: #0f172a;
+        }
+
+        .teacher-stat-card p {
+            margin-top: 5px;
+            color: #64748b;
+        }
+
+    .teacher-section {
+        padding: 24px;
+        margin-bottom: 20px;
+    }
+
+    .teacher-section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        gap: 15px;
+    }
+
+        .teacher-section-title h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #0f172a;
+        }
+
+        .teacher-section-title a,
+        .teacher-section-title span {
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+    .teacher-course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 18px;
+    }
+
+    .teacher-course-card,
+    .teacher-class-item,
+    .teacher-assignment-item,
+    .teacher-note-item,
+    .teacher-student-item {
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 18px;
+        background: #f8fafc;
+        transition: 0.3s;
+    }
+
+        .teacher-course-card:hover,
+        .teacher-class-item:hover,
+        .teacher-assignment-item:hover,
+        .teacher-note-item:hover,
+        .teacher-student-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+    .teacher-course-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        background: #dbeafe;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+
+    .teacher-course-card h3,
+    .teacher-class-item h4,
+    .teacher-assignment-item h4,
+    .teacher-note-item h4,
+    .teacher-student-item h4 {
+        margin-bottom: 8px;
+        font-size: 18px;
+        color: #0f172a;
+    }
+
+    .teacher-course-card p,
+    .teacher-class-item p,
+    .teacher-assignment-item p,
+    .teacher-note-item p,
+    .teacher-student-item p {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .teacher-course-btn,
+    .teacher-join-btn,
+    .teacher-small-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+    }
+
+        .teacher-course-btn:hover,
+        .teacher-small-btn:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+    .teacher-join-btn {
+        background: #22c55e;
+    }
+
+        .teacher-join-btn:hover {
+            background: #16a34a;
+            color: white;
+        }
+
+    .teacher-bottom-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 0.8fr;
+        gap: 20px;
+    }
+
+    .teacher-profile-details p {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 10px 0;
+        border-bottom: 1px solid #e2e8f0;
+        margin: 0;
+    }
+
+    .teacher-profile-details span {
+        color: #64748b;
+        text-align: right;
+        word-break: break-word;
+    }
+
+    .teacher-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .teacher-form-group {
+        margin-bottom: 15px;
+    }
+
+        .teacher-form-group.full {
+            grid-column: span 2;
+        }
+
+        .teacher-form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+
+        .teacher-form-group input,
+        .teacher-form-group textarea,
+        .teacher-form-group select {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 11px 13px;
+            outline: none;
+            background: #f8fafc;
+        }
+
+        .teacher-form-group textarea {
+            min-height: 110px;
+            resize: none;
+        }
+
+            .teacher-form-group input:focus,
+            .teacher-form-group textarea:focus {
+                border-color: #2563eb;
+                box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+                background: white;
+            }
+
+    .empty-box {
+        background: #f8fafc;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        color: #64748b;
+    }
+
+    .teacher-wrapper.collapsed {
+        grid-template-columns: 90px 1fr;
+    }
+
+        .teacher-wrapper.collapsed .teacher-profile h3,
+        .teacher-wrapper.collapsed .teacher-profile p,
+        .teacher-wrapper.collapsed .teacher-menu a span {
+            display: none;
+        }
+
+        .teacher-wrapper.collapsed .teacher-menu a {
+            justify-content: center;
+            padding: 13px 0;
+        }
+
+        .teacher-wrapper.collapsed .teacher-sidebar {
+            padding: 20px 10px;
+        }
+
+        .teacher-wrapper.collapsed .teacher-avatar {
+            width: 54px;
+            height: 54px;
+            font-size: 24px;
+        }
+
+    .teacher-dashboard.dark-mode {
+        background: linear-gradient(135deg, #020617, #111827, #172554);
+    }
+
+        .teacher-dashboard.dark-mode .teacher-sidebar,
+        .teacher-dashboard.dark-mode .teacher-top-card,
+        .teacher-dashboard.dark-mode .teacher-stat-card,
+        .teacher-dashboard.dark-mode .teacher-section {
+            background: rgba(15,23,42,0.96);
+            color: white;
+        }
+
+        .teacher-dashboard.dark-mode h1,
+        .teacher-dashboard.dark-mode h2,
+        .teacher-dashboard.dark-mode h3,
+        .teacher-dashboard.dark-mode h4,
+        .teacher-dashboard.dark-mode label {
+            color: white;
+        }
+
+        .teacher-dashboard.dark-mode p,
+        .teacher-dashboard.dark-mode span,
+        .teacher-dashboard.dark-mode small {
+            color: #cbd5e1 !important;
+        }
+
+        .teacher-dashboard.dark-mode .teacher-course-card,
+        .teacher-dashboard.dark-mode .teacher-class-item,
+        .teacher-dashboard.dark-mode .teacher-assignment-item,
+        .teacher-dashboard.dark-mode .teacher-note-item,
+        .teacher-dashboard.dark-mode .teacher-student-item,
+        .teacher-dashboard.dark-mode .teacher-dropdown,
+        .teacher-dashboard.dark-mode .teacher-notify-item,
+        .teacher-dashboard.dark-mode .empty-box {
+            background: #1e293b;
+            color: white;
+            border-color: #334155;
+        }
+
+        .teacher-dashboard.dark-mode .teacher-menu a {
+            color: #cbd5e1;
+        }
+
+            .teacher-dashboard.dark-mode .teacher-menu a.active,
+            .teacher-dashboard.dark-mode .teacher-menu a:hover {
+                background: #2563eb;
+                color: white;
+            }
+
+        .teacher-dashboard.dark-mode .teacher-icon-btn {
+            background: #1e293b;
+            color: white;
+        }
+
+        .teacher-dashboard.dark-mode .teacher-profile-details p {
+            border-color: #334155;
+        }
+
+        .teacher-dashboard.dark-mode input,
+        .teacher-dashboard.dark-mode textarea {
+            background: #1e293b;
+            color: white;
+            border-color: #334155;
+        }
+
+    @@media(max-width: 992px) {
+        .teacher-wrapper,
+        .teacher-wrapper.collapsed {
+            grid-template-columns: 1fr;
+        }
+
+        .teacher-sidebar {
+            position: relative;
+            top: 0;
+            width: 100%;
+        }
+
+        .teacher-wrapper.collapsed .teacher-profile h3,
+        .teacher-wrapper.collapsed .teacher-profile p,
+        .teacher-wrapper.collapsed .teacher-menu a span {
+            display: inline;
+        }
+
+        .teacher-wrapper.collapsed .teacher-menu a {
+            justify-content: flex-start;
+            padding: 13px 15px;
+        }
+
+        .teacher-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .teacher-bottom-grid,
+        .teacher-form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .teacher-form-group.full {
+            grid-column: span 1;
+        }
+
+        .teacher-top-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    @@media(max-width: 576px) {
+        .teacher-dashboard {
+            padding: 18px;
+        }
+
+        .teacher-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .teacher-actions {
+            width: 100%;
+        }
+
+        .teacher-icon-btn {
+            flex: 1;
+        }
+
+        .teacher-action-btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .teacher-dropdown {
+            right: auto;
+            left: 0;
+            width: 260px;
+        }
+
+        .teacher-profile-details p {
+            flex-direction: column;
+        }
+
+        .teacher-profile-details span {
+            text-align: left;
+        }
+    }
+</style>
+
+<div class="teacher-dashboard">
+    <div class="teacher-wrapper">
+
+        <aside class="teacher-sidebar">
+            <div class="teacher-profile">
+                <div class="teacher-avatar">@avatarLetter</div>
+                <h3>@teacherName</h3>
+                <p>@teacherEmail</p>
+            </div>
+
+            <div class="teacher-menu">
+                <a class="teacher-menu-link active" data-section="dashboardHome">
+                    <i class="fa fa-home"></i><span>Dashboard</span>
+                </a>
+
+                <a class="teacher-menu-link" data-section="myCourses">
+                    <i class="fa fa-book"></i><span>My Courses</span>
+                </a>
+
+                <a class="teacher-menu-link" data-section="uploadNotes">
+                    <i class="fa fa-upload"></i><span>Upload Notes</span>
+                </a>
+
+                <a class="teacher-menu-link" data-section="assignments">
+                    <i class="fa fa-file-alt"></i><span>Assignments</span>
+                </a>
+
+                <a class="teacher-menu-link" data-section="liveClasses">
+                    <i class="fa fa-video"></i><span>Live Classes</span>
+                </a>
+
+                <a class="teacher-menu-link" data-section="students">
+                    <i class="fa fa-users"></i><span>Students</span>
+                </a>
+
+                <a class="teacher-menu-link" data-section="profileSection">
+                    <i class="fa fa-user"></i><span>Profile</span>
+                </a>
+
+                <a href="@Url.Action("Logout","Teacher")">
+                    <i class="fa fa-sign-out-alt"></i><span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="teacher-main">
+
+            <section class="teacher-top-card">
+                <div>
+                    <h1>Welcome, @teacherName 👨‍🏫</h1>
+                    <p>Manage your classes, students and learning content.</p>
+                </div>
+
+                <div class="teacher-actions">
+                    <div class="teacher-notification">
+                        <button type="button" id="notifyBtn" class="teacher-icon-btn">
+                            <i class="fa fa-bell"></i>
+                            <span class="teacher-dot"></span>
+                        </button>
+
+                        <div id="notifyDropdown" class="teacher-dropdown">
+                            <h4>Notifications</h4>
+                            <div class="teacher-notify-item">New student enrollment will appear here.</div>
+                            <div class="teacher-notify-item">Assignment submissions will appear here.</div>
+                            <div class="teacher-notify-item">Live class reminders will appear here.</div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="themeBtn" class="teacher-icon-btn">
+                        <i class="fa fa-moon"></i>
+                    </button>
+
+                    <button type="button" id="collapseBtn" class="teacher-icon-btn">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <button type="button" class="teacher-action-btn" id="quickLiveBtn">
+                        Add Live Class
+                    </button>
+                </div>
+            </section>
+
+            <!-- DASHBOARD HOME -->
+            <div id="dashboardHome" class="teacher-section-page active-section">
+                <section class="teacher-stats">
+                    <div class="teacher-stat-card">
+                        <i class="fa fa-users"></i>
+                        <h2>0</h2>
+                        <p>Total Students</p>
+                    </div>
+
+                    <div class="teacher-stat-card">
+                        <i class="fa fa-book-open"></i>
+                        <h2>1</h2>
+                        <p>Assigned Course</p>
+                    </div>
+
+                    <div class="teacher-stat-card">
+                        <i class="fa fa-file-upload"></i>
+                        <h2>0</h2>
+                        <p>Assignments Uploaded</p>
+                    </div>
+
+                    <div class="teacher-stat-card">
+                        <i class="fa fa-video"></i>
+                        <h2>0</h2>
+                        <p>Live Classes</p>
+                    </div>
+                </section>
+
+                <br />
+
+                <section class="teacher-bottom-grid">
+                    <div class="teacher-section">
+                        <div class="teacher-section-title">
+                            <h2>Assigned Course</h2>
+                            <a href="#" class="teacher-shortcut" data-section="myCourses">Manage</a>
+                        </div>
+
+                        <div class="teacher-course-card">
+                            <div class="teacher-course-icon">
+                                <i class="fa fa-book"></i>
+                            </div>
+
+                            <h3>@courseName</h3>
+                            <p>This is your assigned teaching course. You can upload notes, assignments and live class links for students.</p>
+
+                            <a href="#" class="teacher-course-btn teacher-shortcut" data-section="myCourses">
+                                Manage Course
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="teacher-section">
+                        <div class="teacher-section-title">
+                            <h2>Profile</h2>
+                            <a href="#" class="teacher-shortcut" data-section="profileSection">View</a>
+                        </div>
+
+                        <div class="teacher-profile-details">
+                            <p><strong>Name</strong><span>@teacherName</span></p>
+                            <p><strong>Email</strong><span>@teacherEmail</span></p>
+                            <p><strong>Course</strong><span>@courseName</span></p>
+                            <p><strong>Status</strong><span>Active Teacher</span></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- MY COURSES -->
+            <div id="myCourses" class="teacher-section-page">
+                <section class="teacher-section">
+                    <div class="teacher-section-title">
+                        <h2>My Course</h2>
+                        <span>Assigned course</span>
+                    </div>
+
+                    <div class="teacher-course-grid">
+                        <div class="teacher-course-card">
+                            <div class="teacher-course-icon">
+                                <i class="fa fa-chalkboard-user"></i>
+                            </div>
+
+                            <h3>@courseName</h3>
+                            <p>Manage notes, assignments, students and live classes for this course.</p>
+
+                            <a href="#" class="teacher-course-btn teacher-shortcut" data-section="uploadNotes">Upload Notes</a>
+                            <a href="#" class="teacher-course-btn teacher-shortcut" data-section="assignments">Assignments</a>
+                            <a href="#" class="teacher-course-btn teacher-shortcut" data-section="liveClasses">Live Class</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- UPLOAD NOTES -->
+            <div id="uploadNotes" class="teacher-section-page">
+                <section class="teacher-section">
+                    <div class="teacher-section-title">
+                        <h2>Upload Notes</h2>
+                        <span>PDF / Study Material</span>
+                    </div>
+
+                    <form method="post" action="@Url.Action("AddNote","Teacher")" enctype="multipart/form-data">
+                        <input type="hidden" name="TeacherId" value="@teacherId" />
+                        <input type="hidden" name="CourseName" value="@courseName" />
+
+                        <div class="teacher-form-grid">
+                            <div class="teacher-form-group">
+                                <label>Note Title</label>
+                                <input type="text" name="Title" placeholder="Example: Unit 1 Notes" required />
+                            </div>
+
+                            <div class="teacher-form-group">
+                                <label>Upload File</label>
+                                <input type="file" name="NoteFile" required />
+                            </div>
+
+                            <div class="teacher-form-group full">
+                                <button type="submit" class="teacher-action-btn">
+                                    Upload Notes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br />
+
+                    <div class="empty-box">
+                        Uploaded notes list will appear here after controller connection.
+                    </div>
+                </section>
+            </div>
+
+            <!-- ASSIGNMENTS -->
+            <div id="assignments" class="teacher-section-page">
+                <section class="teacher-section">
+                    <div class="teacher-section-title">
+                        <h2>Assignments</h2>
+                        <span>Create assignment</span>
+                    </div>
+
+                    <form method="post" action="@Url.Action("AddAssignment","Teacher")">
+                        <input type="hidden" name="TeacherId" value="@teacherId" />
+                        <input type="hidden" name="CourseName" value="@courseName" />
+
+                        <div class="teacher-form-grid">
+                            <div class="teacher-form-group">
+                                <label>Assignment Title</label>
+                                <input type="text" name="Title" placeholder="Example: MVC Practical Assignment" required />
+                            </div>
+
+                            <div class="teacher-form-group">
+                                <label>Deadline</label>
+                                <input type="date" name="Deadline" required />
+                            </div>
+
+                            <div class="teacher-form-group full">
+                                <label>Description</label>
+                                <textarea name="Description" placeholder="Write assignment instructions..." required></textarea>
+                            </div>
+
+                            <div class="teacher-form-group full">
+                                <button type="submit" class="teacher-action-btn">
+                                    Add Assignment
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br />
+
+                    <div class="empty-box">
+                        Created assignments will appear here after controller connection.
+                    </div>
+                </section>
+            </div>
+
+            <!-- LIVE CLASSES -->
+            <div id="liveClasses" class="teacher-section-page">
+                <section class="teacher-section">
+                    <div class="teacher-section-title">
+                        <h2>Live Classes</h2>
+                        <span>Create live class</span>
+                    </div>
+
+                    <form method="post" action="@Url.Action("AddLiveClass","Teacher")">
+                        <input type="hidden" name="TeacherId" value="@teacherId" />
+                        <input type="hidden" name="CourseName" value="@courseName" />
+
+                        <div class="teacher-form-grid">
+                            <div class="teacher-form-group">
+                                <label>Class Title</label>
+                                <input type="text" name="ClassTitle" placeholder="Example: ASP.NET MVC Live Class" required />
+                            </div>
+
+                            <div class="teacher-form-group">
+                                <label>Class Date</label>
+                                <input type="date" name="ClassDate" required />
+                            </div>
+
+                            <div class="teacher-form-group">
+                                <label>Start Time</label>
+                                <input type="time" name="StartTime" required />
+                            </div>
+
+                            <div class="teacher-form-group">
+                                <label>End Time</label>
+                                <input type="time" name="EndTime" required />
+                            </div>
+
+                            <div class="teacher-form-group full">
+                                <label>Class Link</label>
+                                <input type="url" name="ClassLink" placeholder="Google Meet / Zoom link" required />
+                            </div>
+
+                            <div class="teacher-form-group full">
+                                <button type="submit" class="teacher-action-btn">
+                                    Add Live Class
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br />
+
+                    <div class="empty-box">
+                        Live classes list will appear here after controller connection.
+                    </div>
+                </section>
+            </div>
+
+            <!-- STUDENTS -->
+            <div id="students" class="teacher-section-page">
+                <section class="teacher-section">
+                    <div class="teacher-section-title">
+                        <h2>Students</h2>
+                        <span>Enrolled students</span>
+                    </div>
+
+                    <div class="empty-box">
+                        Enrolled students of @courseName will appear here after DB connection.
+                    </div>
+                </section>
+            </div>
+
+            <!-- PROFILE -->
+            <div id="profileSection" class="teacher-section-page">
+                <section class="teacher-section">
+                    <div class="teacher-section-title">
+                        <h2>My Profile</h2>
+                        <span>Teacher details</span>
+                    </div>
+
+                    <div class="teacher-profile-details">
+                        <p><strong>Name</strong><span>@teacherName</span></p>
+                        <p><strong>Email</strong><span>@teacherEmail</span></p>
+                        <p><strong>Course</strong><span>@courseName</span></p>
+                        <p><strong>Status</strong><span>Active Teacher</span></p>
+                        <p><strong>Teacher ID</strong><span>@teacherId</span></p>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    const teacherDashboard = document.querySelector(".teacher-dashboard");
+    const teacherWrapper = document.querySelector(".teacher-wrapper");
+
+    const themeBtn = document.getElementById("themeBtn");
+    const collapseBtn = document.getElementById("collapseBtn");
+    const notifyBtn = document.getElementById("notifyBtn");
+    const notifyDropdown = document.getElementById("notifyDropdown");
+    const themeIcon = themeBtn.querySelector("i");
+
+    const menuLinks = document.querySelectorAll(".teacher-menu-link");
+    const sections = document.querySelectorAll(".teacher-section-page");
+    const shortcuts = document.querySelectorAll(".teacher-shortcut");
+    const quickLiveBtn = document.getElementById("quickLiveBtn");
+
+    function openTeacherSection(sectionId) {
+        sections.forEach(section => {
+            section.classList.remove("active-section");
+        });
+
+        document.getElementById(sectionId).classList.add("active-section");
+
+        menuLinks.forEach(link => {
+            link.classList.remove("active");
+
+            if (link.getAttribute("data-section") === sectionId) {
+                link.classList.add("active");
+            }
+        });
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    menuLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-section");
+            openTeacherSection(sectionId);
+        });
+    });
+
+    shortcuts.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute("data-section");
+            openTeacherSection(sectionId);
+        });
+    });
+
+    quickLiveBtn.addEventListener("click", function () {
+        openTeacherSection("liveClasses");
+    });
+
+    if (localStorage.getItem("teacher-theme") === "dark") {
+        teacherDashboard.classList.add("dark-mode");
+        themeIcon.classList.remove("fa-moon");
+        themeIcon.classList.add("fa-sun");
+    }
+
+    themeBtn.addEventListener("click", function () {
+        teacherDashboard.classList.toggle("dark-mode");
+
+        if (teacherDashboard.classList.contains("dark-mode")) {
+            localStorage.setItem("teacher-theme", "dark");
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+        } else {
+            localStorage.setItem("teacher-theme", "light");
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+        }
+    });
+
+    collapseBtn.addEventListener("click", function () {
+        if (window.innerWidth > 992) {
+            teacherWrapper.classList.toggle("collapsed");
+        }
+    });
+
+    notifyBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        notifyDropdown.classList.toggle("show");
+    });
+
+    notifyDropdown.addEventListener("click", function (e) {
+        e.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+        notifyDropdown.classList.remove("show");
+    });
+
+    window.addEventListener("resize", function () {
+        if (window.innerWidth <= 992) {
+            teacherWrapper.classList.remove("collapsed");
+        }
+    });
+</script>
